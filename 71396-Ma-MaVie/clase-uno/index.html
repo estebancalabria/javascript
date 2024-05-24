@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javascript Demo</title>
     <script src="js-features.js"></script>
 </head>
+
 <body>
-    <h1>Bienvenidos a la primer clase del curso Javascript Avanzado</h1>    
+    <h1>Bienvenidos a la primer clase del curso Javascript Avanzado</h1>
+    <div>
+        Ancho Ventana : <span id="ancho"></span> px<br>
+        Alto Ventana : <span id="alto"></span> px<br>
+        Alto Pantalla : <span id="altoPantalla"></span> px<br>
+        Ancho Pantalla : <span id="anchoPantalla"></span> px<br>
+        <script>
+            //El document es parte del DOM
+            //El DOM es la estructura de objetos que genera el navegador cuando se carga un documento 
+            //y se puede alterar mediante Javascript para cambiar dinámicamente los contenidos 
+            //y aspecto de la página
+            document.getElementById("ancho").innerHTML = window.innerWidth;
+            document.getElementById("alto").innerHTML = window.innerHeight;
+            document.getElementById("altoPantalla").innerHTML = screen.height;
+            document.getElementById("anchoPantalla").innerHTML = screen.width;
+            //El BOM es (Browser Object Model) es un conjunto de objetos que representan al navegador
+            //screen, location, history, navigator, window
+        </script>
+    </div>
+    <div>
+        <h2>Contenido de la clase</h2>
+        <ul>
+            <li>Introducción a Javascript</li>
+            <li>Variables</li>
+            <li>Operadores</li>
+            <li>Condicionales</li>
+            <li>Ciclos</li>
+            <li>Funciones</li>
+            <li>Eventos</li>
+            <li>Objetos</li>
+            <li>Arrays</li>
+            <li>DOM</li>
+            <li>Formularios</li>
+            <li>JSON</li>
+            <li>APIs</li>
+            <li>ES6</li>
+        </ul>
+    </div>
 </body>
+
 </html>
