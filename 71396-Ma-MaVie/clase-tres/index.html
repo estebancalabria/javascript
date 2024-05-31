@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Super Duper Todo List</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h1 class="alert alert-info text-center">
+        Mi Super Super Todo List
+    </h1>
+    <div class="container">
+        <h3 class="alert alert-info">Mi Lista</h3>
+        <ul id="lstTareas" class="list-group">
+        </ul>
+        <div class="input-group">
+            <input id="txtTarea" type="text" class="form-control" placeholder="Escribe una tarea...">
+            <button id="btnAgregar" type="button" class="btn btn-outline-primary">
+                Agregar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let tareas = [
+            { id: 1, nombre: "Aprender el DOM", done: false },
+            { id: 2, nombre: "Aprender trucazos de Javascript", done: false },
+            { id: 3, nombre: "Ver Intro a Ajax", done: false },
+            { id: 4, nombre: "Darle like al Instram del profe 👍", done: false },
+        ];
+
+        /*function mostrarTareasConInnerHTML() {
+            let lstTareas = document.getElementById("lstTareas");
+            for (let tarea of tareas){
+                lstTareas.innerHTML += `<li class='list-group-item'>${tarea.nombre}</li>`;
+            }
+        }
+
+        mostrarTareasConInnerHTML();*/
+
+        function crearBotonEliminar(tarea) {
+            let botonEliminar = document.createElement("button");
+            botonEliminar.className = "btn btn-danger float-end";
+            botonEliminar.innerHTML = "&#128465;";
+            botonEliminar.addEventListener("click", () => {
+                tareas = tareas.filter(t => t.id !== tarea.id);
+                mostrarTareasConAppendChild();
+            });
+            return botonEliminar;
+        }
+
+
+        function mostrarTareasConAppendChild() {
+            //Obtengo el primer ul dentro de un div con la clase container
+            let lstTareas = document.querySelector(".container>ul");
+            lstTareas.innerHTML = "";
+            for (let tarea of tareas) {
+                let elemento = document.createElement("li");
+                elemento.className = "list-group-item";
+                elemento.textContent = tarea.nombre;
+                elemento.appendChild(crearBotonEliminar(tarea));
+                lstTareas.appendChild(elemento);
+            }
+        }
+        mostrarTareasConAppendChild();
+
+        /*
+            Elementos mas usados de la api del DOM
+            * document.getElementById()
+            * document.querySelector()
+            * document.querySelectorAll()
+            * document.createElement()
+            * elemento.innerHTML
+            * elemento.appendChild()
+            * elemento.removeChild()
+            * 
+        */
+
+        document.getElementById("btnAgregar").addEventListener("click", () => {
+            let nombreTarea = document.getElementById("txtTarea").value;
+
+            //Esto mismo lo puedo hacer con el Spread operator en vez del push
+            /*let nuevaTarea = {
+                id : tareas.length + 1,
+                nombre : nombreTarea,
+                done : false
+            }
+            tareas.push(nuevaTarea);*/
+
+            //Esto mismo lo puedo hacer con el Spread operator en vez del push y queda mas pro
+            if (nombreTarea){
+                tareas = [
+                    ...tareas,
+                    {
+                        //id: tareas.length + 1,
+                        id : Math.max(...tareas.map(t => t.id), 0) + 1,
+                        nombre: nombreTarea,
+                        done: false
+                    }
+                ];
+                mostrarTareasConAppendChild();
+                document.getElementById("txtTarea").value = "";
+            }
+        })
+    </script>
+</body>
+
+</html>
