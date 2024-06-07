@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 90vw;
+            margin: auto;
+        }
+        th { 
+            text-align: start;
+            background-color: lightgrey;
+            padding: 0.5em;
+        }
+
+        form {
+            width: 90vw;
+            margin: auto;
+            padding: 2em;
+            border: 1px solid;
+        }
+        form>input{
+            width: 100%;
+            margin-bottom: 1em;
+        }
+    </style>
+
+    <script>
+        const url = "http://localhost:3000/articulos";
+
+        function crearFilaTabla(articulo){
+            return `
+            <tr>
+                <td>${articulo.codigo}</td>
+                <td>${articulo.descripcion}</td>
+                <td>${articulo.precio}</td>
+                <td style="text-align:start">
+                    <button>Editar</button>
+                    <button type="button" onClick='eliminarArticuloDelBackend("${articulo.id}")'>
+                        Eliminar
+                    </button>
+                </td>
+            </tr>`
+        }
+
+        function mostrarTabla(articulos){
+            const tbody_articulos = document.getElementById("tbody_articulos");
+            tbody_articulos.innerHTML = "";
+            for (let articulo of articulos){
+                tbody_articulos.innerHTML += crearFilaTabla(articulo);
+            }
+        }
+
+        function recuperarDatosDelBackend(){
+           fetch(url).then( resp => resp.json() ).then(data => mostrarTabla((data)));
+        }
+
+        function agregarArticuloAlBackend(articulo){
+            fetch(url, 
+                {   
+                    method:"post",
+                    body : JSON.stringify(articulo)
+
+                }).then((resp)=>{
+                alert("articulo agregado");
+                recuperarDatosDelBackend();
+            })
+        }
+        
+        function eliminarArticuloDelBackend(id){
+            fetch(url + "/" +id , {method:"delete"}).then((resp)=>{recuperarDatosDelBackend()})
+        }
+
+        function click_btnAgregarArticulo(){
+            const form = document.getElementById("formArticulo");
+            if (form.checkValidity()){
+                agregarArticuloAlBackend(form2json())
+                form.reset();
+            } else {
+                alert("Formulario Invalido");
+            }
+            
+        }
+
+        function form2json(){
+            return {
+                codigo : document.getElementById("txtCodigo").value,
+                descripcion : document.getElementById("txtDescripcion").value,
+                precio : document.getElementById("txtPrecio").value,
+            }
+        }
+
+        function mostarFormularioAgregar(){
+            document.getElementById("seccionTablaArticulos").style.display = "none";
+            document.getElementById("seccionFormularioArticulo").style.display = "block";
+        }
+
+        function volverAlListar(){
+            document.getElementById("seccionTablaArticulos").style.display = "block";
+            document.getElementById("seccionFormularioArticulo").style.display = "none";
+        }
+
+        window.addEventListener("load",()=>{
+            recuperarDatosDelBackend();
+        })
+    </script>
+</head>
+<body>
+    <div id="seccionTablaArticulos">
+
+        <button onclick="mostarFormularioAgregar()">Agregar</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody_articulos">
+
+            </tbody>
+        </table>
+    </div>
+    <hr />
+
+    <div id="seccionFormularioArticulo" style="display: none;">
+        <form id="formArticulo" onsubmit="alert(1)">
+            <h2>Formulario Articulo</h2>
+            <label>Codigo</label>
+            <input id="txtCodigo" type="text" required/>
+
+            <label>Descripcion</label>
+            <input id="txtDescripcion" type="text" required/>
+
+            <label>Precio</label>
+            <input id="txtPrecio" type="number" required/>
+            
+            <div>
+                <!--hacemos el boton un type button para que no refresque-->
+                <button type="button" onclick="volverAlListar()">
+                    Volver
+                </button>
+                <button type="button" id="btnAgregar" onclick="click_btnAgregarArticulo()">
+                    Agregar
+                </button>
+
+            </div>
+        </form>
+    </div>
+</body>
+</html>

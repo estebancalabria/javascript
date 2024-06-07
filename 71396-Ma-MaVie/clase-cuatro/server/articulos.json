@@ -1,0 +1,16 @@
+{
+  "articulos": [
+    {
+      "id": "1",
+      "codigo": "PARRI01",
+      "descripcion": "Parrilla par el balcon",
+      "precio": 50000
+    },
+    {
+      "id": "2",
+      "codigo": "CHORI01",
+      "descripcion": "Pincho Choricero",
+      "precio": 13000
+    }
+  ]
+}
