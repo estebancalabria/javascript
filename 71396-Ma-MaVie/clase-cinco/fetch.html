@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" placeholder="Ingrese una url..." />
+    <textarea rows="10">
+
+    </textarea>
+    <button id="btnFetchConThen">Fetch con then</button>
+    <button id="btnFetchConAsyncAwait">Fetch con async/await</button>
+
+    <script>
+        
+
+        document.getElementById("btnFetchConThen").addEventListener("click",()=>{
+            let url = document.querySelector("input").value;
+            fetch(url).then(resp => resp.text()).then((data)=>{
+                 document.querySelector("textarea").value = data;
+            }).catch((err)=>{
+                document.querySelector("textarea").value = "CATCH : "+ err;
+            })
+        });
+
+        document.getElementById("btnFetchConAsyncAwait").addEventListener("click",async ()=>{
+            let url = document.querySelector("input").value;
+            try{
+                 let resp = await fetch(url);
+                 data = await resp.text();
+                 document.querySelector("textarea").value = data;
+            }catch(err){
+                document.querySelector("textarea").value = "CATCH : "+ err;
+            }
+        })
+    </script>
+</body>
+</html>

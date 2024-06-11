@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btnLlamadaAsincronica">Ejecutar Timer</button>
+    <div id="msgResultadoLlamada"></div>
+    <script>
+        //Ejemplo 1 : LLamandas sincronicas
+        //Los alert son un ejemplo en javascript de llamadas sincronicas
+        //Hasta que termina el primero, no muestra el segundo
+        //alert(1);
+        //alert(2);
+
+        //Ejemplo 2 : Manejod de eventos (primera aproximaxion al concepto de algo asincronico)
+        //            Al click le asocio un callback y al setTimeout tambien
+        //            Uso de callbacks
+        document.getElementById("btnLlamadaAsincronica").addEventListener("click", () => {
+            document.getElementById("msgResultadoLlamada").innerHTML = "Esperando que el timer termine...";
+            //Metodo en JS para hacer un timer
+            //setTimeout y set setInterval
+            setTimeout(() => {
+                document.getElementById("msgResultadoLlamada").innerHTML = "Timer Finalizado";
+            }, 3000);
+
+            //Desventajas de los callbacks
+            //* Anidamiento Excesivo : Programacion flecha / callback hell
+            //* Dificil de leer/entender cuando tengo mucho anidamiento
+            //* Viendo la firma de un metodo a veces no hay forma clara de saber si el parametro es un callback
+            //* Necesito un callback separado para el manejo de errores (ambiguedad o falta de estandarizacion para el
+            // manejo de errores)
+            //* No se sabe bien cual es la firma esperada de la funcion de callbak
+        });
+    </script>
+
+    <button id="btnLlamadaAsincronicaPromesa">Ejecutar Timer Con Promesa</button>
+    <div id="msgResultadoLlamadaPromesa"></div>
+    <script>
+        //Las promesas son mas feas de escribir y entender al programarlas
+        function sleep(milisegundos){
+            return new Promise((accept, reject)=>{
+                setTimeout(accept, milisegundos);
+            });
+            //Al crear una promesa en el constuctor se le debe pasar un metodo
+            //Al crear la promesa ese metodo se ejecuta inmediatamente
+            //El metodo que le paso como parametro al construir una promesa tiene dos parametros accept y reject
+            //Lo dificil de entender es que la promesa al crearla recibe un metodo que a su vez recibe otros metodos como parametros
+            //Si sale todo bien llamo al metodo accept cuando termino
+            //Si sale todo mal llamo al metodo reject
+        }
+
+
+        document.getElementById("btnLlamadaAsincronicaPromesa").addEventListener("click", ()=>{
+            //Ejemplo 3 : Vamos conociendo a la spromesas
+            //Esto serian los callback que quiero que se ejecuten
+            //let accept = ()=>{alert("todo ok")};  
+            //let reject = ()=>{alert("todo mal")};
+
+            //La promesa es un objeto que en el costructor recibe el metodo a ejecutar, con dos parametros
+            //que son los callbacks, el primero si sale todo bien, el segundo si sale todo mal
+            //Al crear el objeto promesa se ejecuta el emetodo
+            //let promesa = new Promise((accept, reject)=>{
+            //    setTimeout(accept, 3000);
+            //});
+
+            //promesa.then(()=>{alert("todo OK")}).catch(()=>{alert("todo mal")});
+
+            //Pero son faciles e intuitivas de usar
+            document.getElementById("msgResultadoLlamadaPromesa").innerHTML = "Esperando que el timer termine...";
+            sleep(3000).then(()=>{
+                document.getElementById("msgResultadoLlamadaPromesa").innerHTML = "Ya pasaron 3s espero otros tres mas";
+                return sleep(3000);
+            }).then(()=>{
+                document.getElementById("msgResultadoLlamadaPromesa").innerHTML = "Ahora si termine...";
+            })
+
+            //Desventajas
+            // Dificil de entender al principio como programarlas
+            //Ventajas de Promesas
+            // Al ver la firma de un metodo si veo que devuelve una promesa ya se que usa then (estandar)
+            // Permite encadenar promesas
+            // promesa().then().then().then() en lugar de anidar callbacks (igual es un poco confuso)
+        });
+    </script>
+
+    <button id="btnLlamadaAsincronicaPromesaAsyncAwait">Ejecutar Timer Con Promesa con Async Await</button>
+    <div id="msgResultadoLlamadaPromesaAsyncAwait"></div>
+
+    <script>
+        //Ejemplo 4 : Promesas con Async/await
+        //Las palabras reservadas async await convierten un codigo que es asincronico 
+        //en apariencia sincronico para la lectura
+        //Par usar await tengo que marcar la funcion que llamo como async
+        document.getElementById("btnLlamadaAsincronicaPromesaAsyncAwait").addEventListener("click", async ()=>{
+            document.getElementById("msgResultadoLlamadaPromesaAsyncAwait").innerHTML = "Empezando el timer";
+            await sleep(2000);  //El await reemplaza al then
+            document.getElementById("msgResultadoLlamadaPromesaAsyncAwait").innerHTML = "Pasaron 2 s";
+            await sleep(2000);  //El await reemplaza al then
+            document.getElementById("msgResultadoLlamadaPromesaAsyncAwait").innerHTML = "Esperemos un pquito mas";
+            await sleep(2000);  //El await reemplaza al then
+            document.getElementById("msgResultadoLlamadaPromesaAsyncAwait").innerHTML = "Ahora si termino";
+        })
+
+    </script>
+
+
+</body>
+</html>

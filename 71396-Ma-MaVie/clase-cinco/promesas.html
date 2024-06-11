@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>Empezar la magia</button>
+    <h1>
+        La magia de las promesas
+    </h1>
+    <script>
+        function click(elemento){
+            return new Promise((accept,reject)=>{
+                 elemento.addEventListener("click", accept);   
+            });
+        }
+
+        function sleep(milisegundos){
+            return new Promise((accept, reject)=>{
+                setTimeout(accept, milisegundos);
+            });
+        }
+
+        async function fadeIn(elemento, milisegundos){
+            let pasos = 10;
+            for (let i=1; i<=pasos; i++){
+                elemento.style.opacity = i/pasos;
+                await sleep(milisegundos/pasos)
+            }
+        }
+
+        async function fadeOut(elemento, milisegundos){
+            let pasos = 10;
+            for (let i=pasos; i>=1; i--){
+                elemento.style.opacity = i/pasos;
+                await sleep(milisegundos/pasos)
+            }
+
+        }
+
+        ( async ()=>{
+            let boton = document.querySelector("button");
+            let h1 = document.querySelector("h1");
+            
+            await click(boton);
+            h1.innerHTML = "Procesando el evento";
+            await fadeOut(h1, 3000);
+            await sleep(2000)
+            h1.innerHTML = "Evento Procesado la primera vez";
+            await fadeIn(h1, 3000);
+
+            await click(boton);
+            h1.innerHTML = "Procesando el evento de nuevo";
+            await fadeOut(h1, 3000);
+            await sleep(2000)
+            h1.innerHTML = "Evento Procesado la segunda vez";
+            await fadeIn(h1, 3000);
+            
+            await click(boton);
+            h1.innerHTML = "Procesando el Otra vez";
+            await fadeOut(h1, 3000);
+            await sleep(2000)
+            h1.innerHTML = "Evento Procesado la ultima vez";
+            await fadeIn(h1, 3000);
+
+            boton.disabled = true;
+        })(); //IIFE Imetiately Invoked Function
+
+
+    </script>
+</body>
+</html>
