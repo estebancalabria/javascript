@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //let xhr = new XMLHttpRequest();
+    </script>
+</head>
+
+<body>
+    <button id="btnRecuperarFetch">
+        Recuperar datos con Fetch
+    </button>
+
+    <button id="btnRecuperarXMLHttpRequest">
+        Recuperar datos con XMLHttpRequest
+    </button>
+
+    <div id="divResults">
+
+    </div>
+
+    <script>
+        const url = "https://swapi.dev/api/people";
+
+        document.getElementById('btnRecuperarFetch').addEventListener('click', async () => {
+            document.getElementById('divResults').innerHTML = "Recuperando datos con Fetch...";
+            let resp = await fetch(url);
+            let data = await resp.json();
+            let divResults = document.getElementById('divResults');
+            divResults.innerHTML = data.results.map(person => `<p>${person.name}</p>`).join('');
+
+            //Forma con then
+            /*fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let results = document.getElementById('results');
+                    results.innerHTML = "";
+                    data.results.forEach(person => {
+                        let p = document.createElement('p');
+                        p.textContent = person.name;
+                        results.appendChild(p);
+                    });
+                });*/
+        });
+
+        document.getElementById('btnRecuperarXMLHttpRequest').addEventListener('click', () => {
+            document.getElementById('divResults').innerHTML = "Recuperando datos con XMLHttpRequest...";
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function () {
+                console.log(xhr.readyState);
+                console.log(xhr.status);
+                
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let data = JSON.parse(xhr.responseText);
+                    let divResults = document.getElementById('divResults');
+                    divResults.innerHTML = data.results.map(person => `<p>${person.name}</p>`).join('');
+                } else if (xhr.readyState === 4) {
+                    console.error('Error en la solicitud: ' + xhr.statusText);
+                }
+            };
+            xhr.send();
+        });
+    </script>
+
+</body>
+
+</html>

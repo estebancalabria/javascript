@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Esto...
+        //Aunque usted no lo vea , el new Object() esta implicito
+        let objeto = { 
+            nombre: "Juan",
+            apellido: "Perez",
+            edad: 30
+        };   
+
+        //Es lo mismo que esto
+        let objetoDos = new Object();  //Object es una funcion constructora, estrictamente no es una clase
+        objetoDos.nombre = "Juan",
+        objetoDos.apellido = "Perez",
+        objetoDos.edad = 30
+
+        //let a = /^dss/;                     //Esto
+        //let b = new RegExp("^dss");         //Es lo mismo que esto
+
+        //Lo que en otros lenguajes llamamos clses en JS se llaman funciones constructoras
+
+        //De hecho en javascript cualquier funcion puede ser una funcion constructora
+        function pepe() { return 1}   //pepe() deberia ir llamarse Pepe() para que sea transparente que una funcion constructora
+        let objetoTres = new pepe();
+
+        //En javascript hay un convencion
+        //LAs funciones constructoras cuando se invocan con new automaticamente retornan un objeto (this)
+        //Por eso las funciones construntoras tienen un return implicito
+        //Me voy a dar cuenta si el programador quiere que invoque la funcion con new 
+        //                                                 si la funcion empieza con mayuscula
+
+
+        //Programacion orientada a objetos
+        //En todos los lenguajes cualquier clase hereda de la clase Object
+        //En otros lenguajes cuando definis una clase estas definiendo un tipo de dato
+        //En JS no hay tipos de datos, por ende el concepto de clase "no existe"
+        //Si no hay clases como defino objetos similares?
+        //En javascript para eso estan las funciones conctructoras
+
+        //En javascript todos los objetos tienen las siguientes propiedades
+        // 2. constructor: es una referencia a la funcion constructora que se uso para crear el objeto
+        // 3. toString()
+        console.log(objeto.toString());
+        console.log(objeto.constructor);
+        console.log(objeto.constructor == Object); // true
+
+        //Las functiones constructoras cuando hacen new devuelve un objeto que es una copia de otro
+        //Todas las funciones constructoras tienen un prototipo
+        //El prototipo es un objeto pre-exitente que copiamos cuando hacemos un new
+        //Ese objeto se conoce como 
+        //En javascript hay un objeto que es el prototipo de todo
+
+        //El problema del huevo y la gallina en javascript
+        //Object es una funcion constructora
+        //Tiee un prototipo
+        //El prototipo de Object fune creado con la misma funcion constructora Object
+        // Object.prototype.constructor == Object
+        // Object.prototype.constructor.prototype.constructor == Object
+        // Object.prototype.constructor.prototype.constructor.prototype.constructor == Object
+
+
+        //
+        //Vamos a hablar de funciones constructoras
+        //
+
+        //Las funciones constructoras son funciones que se usan para crear objetos
+        //Esta la funcion constructora Object que es parte del lenguaje
+
+        
+        //puedo definir mis propias funciones constructoras
+        function Personaje(nombre, apellido, edad){
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.edad = edad;
+        }
+
+        let personaObject = {
+            nombre: "Juan",
+            apellido: "Perez",
+            edad: 30
+        }
+        //personaObject.constructor es Object
+
+        let personaPersona = new Personaje("Juan", "Perez", 30);
+        //personaPersona.constructor es Personaje
+
+        //En la version 6 de JS se agrego la palabra reservada class para definir funciones constructoras
+        //Esto es para que la sintaxis sea similar otros lenguajes pero internarmeente sigue siendo una funcion constructora
+        class ClasePersona {
+            constructor(nombre, apellido, edad){
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.edad = edad;
+            }
+        }
+        let personaTres = new ClasePersona("Juan", "Perez", 30);
+        //Es un error pensar que las clases son una nueva forma de programar en JS
+        //Es un enmascaramiento de las funciones constructoras
+
+
+        //
+        // Vamos a hablar de objetos
+        //
+
+        // Los objetos tienen atributos/propiedades y metodos
+        let obj = {
+            nombre : "Juan",
+            saludar : function(){
+                console.log("Hola soy " + this.nombre);
+            }
+        }
+        obj.saludar();
+
+        //En JS los objetos son dinamicos (Se le pueden agregar propiedades on the fly)
+        //Esta es la caracteristica mas importante de JS
+        obj.apellido = "Perez";
+
+        //Importante : Dos objetos creados con la mimsa funcion constuctora
+        //             pueden tener distinta estructura (Bien Sebastian)
+        //             Si no sos prolijo con el código puede terminar mal.
+
+        //Podemos Listar las propiedadesd e los objetos y puedo acceder a las propiedades por indice
+        for (let propiedad in obj){
+            console.log(propiedad + " : " + obj[propiedad]);
+        }
+
+        // obj["nombre"] === obj.nombre    ==>> true
+        // En otros lenguajes esto se hace por reflection, pero en JS reflection esta implicita
+
+        //Tambien puedo inspeccionar un objeto en la consola con en console.dir
+        console.dir(obj);
+
+        //Todo los objetos tienen las propiedades
+        // constructor
+        // toString
+        // ... y otras
+
+        //
+        // Vamos a hablar de las funciones
+        //
+
+        //Las funciones son objetos
+        //Tienen propiedades y metodos
+        // Osea que tienen el constructor y el toString
+        // y ademas tienen
+        // prototype
+        // name
+        // call
+        // length
+        //Las funciones son creadas por la funcion constructora Function que es parte del lenguaje
+        //El lenguaje trae las funciones constructoras Object y Function
+
+        function demo(){
+            console.log("Hola");
+        }
+        console.log(demo.constructor);
+        console.log(demo.toString());
+        console.log(demo.name);
+        console.log(demo.length);  //0 porque no tiene parametros
+
+        function demo2(nombre){
+            console.log("Hola " + nombre);
+        }
+        console.log(demo2.length);  //1 porque tiene un parametro
+
+        //Ademas las funciones tienen una propiedad prototype
+        //El prototype s un objeto que voy copiar si uso la funcion como funcion constructora y hago un new
+        //De aca se dice que Javascript es orientado a prototipos en lugar de orientado a objetos
+
+        //Sebastian :Si una función es un objeto y los objetos no se basan en clases estructuradas 
+        //entonces se podrían generar funciones dinámicamente?
+        //Si, se pueden generar funciones dinamicamente
+        //let funcDinamica = new Function("alert('Hola')");
+        //funcDinamica();
+
+        //
+        // Vamos a hablar de los prototipos
+        //
+
+        // Las funciones constructoras (que son objetos) tienen la propiedad prototype
+        // que es el objeto que se copia cuando se hace un new
+        // la propiedad prototype la tienen las funciones constructoras
+        let objetoNuevo = {
+            nombre: "Juan",
+            apellido: "Perez",
+            edad: 30
+        }
+        //objetoNuevo.prototype // me da undefined porque no es una funcion constructora
+        //Ahora todos los objetos en js tienen las propiedades
+        // toString
+        // constructor
+        // __proto__  (que es el objeto que usaron para crearme a mi : Yo soy una copia de este objeto)
+
+        objetoNuevo.__proto__ == Object.prototype // true
+
+        //De aca viene el enademaiento de prototipos (prototype chain)
+        //Si no encuentro una propiedad en el objeto que estoy inspeccionando 
+        //voy a buscar en el objeto que me copio
+        //(Una especie de herencia)
+    
+        //Si yo le cambio el toString al prototipo de Object
+        Object.prototype.toString = function(){
+            return "Hola soy un objeto";
+        }
+        //Estaria cambiando el toString de todos los objetos
+        console.log(objetoNuevo.toString());
+
+        //Ejemplo practico
+        //En el lenguaje tengo la funcion constructora String que se usa para crear strings
+
+        //Es decir que es lo mismo
+        let cadena = "Hola";
+        //Que
+        //let cadena = new String("Hola");
+
+        //Lo puedo hacer incluso despues de haber creado la cadena
+        String.prototype.toMayuscula = function(){
+            return this.toUpperCase();
+        }
+
+        let cadena2 = "hola que tal";
+
+        console.log(cadena.toMayuscula());
+        console.log(cadena2.toMayuscula());
+
+    </script>
+</head>
+<body>
+
+    
+</body>
+</html>
