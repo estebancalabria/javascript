@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Recibe prototipo, propias
+        //Es lo mismo que hacer un new pero ademas se le pueden definir prototipos
+        //Era la forma de usar herencia 
+
+        //creo un objeto con un prototipo  {nombre : "Esteban", apellido : "Calabria"}
+        let obj = Object.create( {nombre : "Esteban", apellido : "Calabria"} );
+
+        //Cuando hago objeto.propiedad si la propieda o metodo
+        // no esta en el objeto actual la busca el prototipo
+
+        //Me va a mostrar nombre y apellido porque itera las propiedades del objeto actual 
+        //y del prototipo
+        for (let prop in obj) { 
+            console.log(prop + " : " + obj[prop]) 
+        }
+
+        //Ejemplo 2 : Agregar propiedades a un objeto
+        //obj.edad = 30;   //Forma Directa
+
+        //Otra forma de definir una propiedad en un objeto con mas control
+        /*Object.defineProperty(obj, "edad", {
+            value : 30,
+            writable : true,
+            configurable : true,
+            enumerable : true
+        });*/
+
+        //Esto se usaba antes del ES6 para definir propiedades en un objeto
+        Object.defineProperty(obj, "edad", {
+            value : 30,
+            writable : false,
+            configurable : true,
+            enumerable : false
+        });
+        //obj.edad = 40;  //No se puede modificar porque es de solo lectura
+
+        //Ejemplo 4 : El segundo parametro son las propiedades propias del objeto
+        let obj2 = Object.create( {nombre : "Esteban", apellido : "Calabria"}, {
+            nombre : {
+                value : "Juan",
+                writable : true,
+                configurable : true,
+                enumerable : true
+            }
+        });
+
+        //obj2.nombre  >>>   'Juan'
+        //obj2.__proto__.nombre  >>>  'Esteban'
+
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

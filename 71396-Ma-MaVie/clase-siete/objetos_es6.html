@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        // Ejemplo 1
+        // Clase sin constructor, sin encapsulamiento
+        // class Persona {
+        //     nombre = "";
+        //     apellico = "";
+        // }
+
+        // let p = new Persona();  //Estoy creando un objeto inconsistente
+        // p.nombre = "Juan";
+        // p.apellico = "Perez";
+
+        //Ejemplo 2 
+        // Clase con constructor, sin encapsulamiento
+        // class Persona {
+        //     constructor(nombre, apellido) {
+        //         //Puedo crear los atributos en el constructor sin declararlo
+        //         this.nombre = nombre;
+        //         this.apellido = apellido;
+        //     }
+        // }
+        // let p = new Persona("Juan", "Perez");
+        // p.segundoNombre = "Armando";  //En javascript se pueden agregar propiedades dinamicamente
+
+        //Ejemplo 3
+        // Clase sin constructor, con encapsulamiento (con convencion de nombres)
+        // 
+        //   1) Convenciones de nombres para emular encapsulamiento
+        //   2) Metodos accesores (set, get) para acceder a los atributos
+        //   3) Validaciones en los metodos accesores con excepciones
+        //
+        // class Persona {
+        //     //private nombre = "";
+        //     //private apellido = "";
+
+        //     //El guion bajo es como si fuera privado (convencion de nombres)
+        //     _nombre = "";
+        //     _apellido = "";
+
+        //     //Metodos accesores set, y get son palabras reservadas de javascript 
+        //     //para indicar metodos de acceso (accesores) a los atributos
+        //     get nombre() {
+        //         return this._nombre;
+        //     }
+
+        //     set nombre(nombre) {
+        //         //Validaciones para asegurarnos que el objeto sea consistente
+
+        //         if (!nombre) {
+        //             throw new IlegalArgumentExcepcion("El nombre es requerido");
+        //         }
+
+        //         if (nombre.length < 3) {
+        //             throw new IlegalArgumentExcepcion("El nombre debe tener al menos 3 caracteres");
+        //         }
+
+        //         this._nombre = nombre;
+        //     }
+
+        //     get apellido() {
+        //         return this._apellido;
+        //     }
+
+        //     set apellido(apellido) {
+        //         this._apellido = apellido;
+        //     }
+        // }
+
+        // let p = new Persona();
+        // p.nombre = "Juan";
+        // p.apellido = "Perez";
+
+        // //Chequeo de excepciones
+        // try {
+        //     p.nombre = "J";
+        // } catch (e) {
+        //     console.log(e.message);
+        // }
+
+        //Ejemplo 4
+        // Clase con constructor, con encapsulamiento (con convencion de nombres)
+        // Esto seria lo ideal, encapsulamiento y constructor
+        // auque en la practica no estaria bueno econtrarlo mas
+
+        class Persona {
+            //como empieza con _ es como si fuera privado
+
+            _validarNombre(nombre) {
+                if (!nombre) {
+                    throw new IlegalArgumentExcepcion("El nombre es requerido");
+                }
+
+                if (nombre.length < 3) {
+                    throw new IlegalArgumentExcepcion("El nombre debe tener al menos 3 caracteres");
+                }
+            }
+
+            constructor(nombre, apellido) {
+                this._validarNombre(nombre);
+                this._nombre = nombre;
+                this._apellido = apellido;
+            }
+
+            get nombre() {
+                return this._nombre;
+            }
+
+            set nombre(nombre) {
+                this._validarNombre(nombre);
+                this._nombre = nombre;
+            }
+
+            get apellido() {
+                return this._apellido;
+            }
+
+            set apellido(apellido) {
+                //TODO Agregar validciones
+                this._apellido = apellido;
+            }
+        }
+
+        let p = new Persona("Juan", "Perez");
+        p.nombre = "Juan";
+        p.apellido = "Perez";
+
+        //Chequeo de excepciones
+        try {
+            p.nombre = "J";
+        } catch (e) {
+            console.error(e.message);
+        }
+
+        //Repasando
+        //El prototipo con el que fue construido (del que fue copiado) el objeto p
+        //coincide con el prototipo de la clase Persona (funcion constructora Persona en Javascript)
+        //p.__proto__ == Persona.prototype  //true
+
+        //Repasando
+        //Los prototipos que ya vienen con el lenjuaje son:
+        //Object.prototype   //Prototipo de todos los objetos, Object es funcion constructora
+        //Function.prototype //Prototipo de todas las funciones, Function es funcion constructora
+
+        //Las funciones en javascript son objetos, por lo que tienen un prototipo
+        //Podemos decir que Function "hereda de " Object por lo que
+        //Function.prototype.__proto__ == Object.prototype
+
+        //En javascript siempre que creamos un objeto lo copiamos de un prototipo que ya existe
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

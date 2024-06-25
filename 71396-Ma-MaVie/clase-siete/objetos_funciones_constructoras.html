@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //Ejemplo 1
+        //Clase persona con funciones constructoras, con constructor
+        //Me doy cuenta que es una clase porque la primera letra de la clase es mayuscula
+        // function Persona(nombre, apellido) {
+        //     this.nombre = nombre;
+        //     this.apellido = apellido;
+        // }
+
+        // let p = new Persona("Juan", "Perez");
+
+        //Ejemplo 2. Con encapsulamiento
+        // function Persona(nombre, apellido) {
+        //     this._validarNombre = function(nombre){
+        //         if (!nombre) {
+        //             throw new IlegalArgumentExcepcion("El nombre es requerido");
+        //         }
+        //     }
+
+        //     //Validaciones para asegurarnos que el objeto sea consistente
+        //     this._validarNombre(nombre);
+
+        //     this._nombre = nombre;
+        //     this._apellido = apellido;
+
+
+        //     this.getNombre = function() {
+        //         return this._nombre;
+        //     }
+
+        //     this.setNombre = function(nombre) {
+        //         this._validarNombre(nombre);
+        //         this._nombre = nombre;
+        //     }
+
+        //     this.getApellido = function() {
+        //         return this._apellido;
+        //     }
+
+        //     this.setApellido = function(apellido) {
+        //         this._apellido = apellido;
+        //     }
+        // }
+
+        // //Uso de la clase Persona con funciones constructoras
+        // let p = new Persona("Juan", "Perez");
+        // console.log(p.getNombre());
+        // console.log(p.getApellido());
+        // p.setNombre("Armando");
+
+        //Ejemplo 3. Como forzar el encapsulamiento con closures
+        //Es una funcion auto invocada.
+        //A persona se le va asignar el resultado de lo que invoque a la funcion
+        //IIFE (Immediately Invoked Function Expression)
+        //El lado oscuro de javascript
+        const Persona = (function(){
+            //Estas ahora son variables locales de la IIFE
+            //Estas variables son privadas
+            let nombre = "";
+
+            function validarNombre(nombre){
+                if (!nombre) {
+                    throw new IlegalArgumentExcepcion("El nombre es requerido");
+                }
+            }
+
+            function Persona(name) {
+                validarNombre(name);
+                nombre = name;
+            }
+
+            Persona.prototype.getNombre = function() {
+                return nombre;
+            }
+
+            return Persona;
+        })();
+
+        //La variable nombre es una variable local de la IIFE
+        //El metodo getNombre es un metodo publico me devuelve la variable local de la IIFE
+
+        let p = new Persona("Juan");
+        console.log(p.getNombre());
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

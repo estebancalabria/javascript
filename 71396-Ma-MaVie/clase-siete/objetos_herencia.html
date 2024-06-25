@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Ejemplo 5 : Herencia Previa al ES6
+        // function Persona(nombre, apellido) {
+        //     this.nombre = nombre;
+        //     this.apellido = apellido;
+
+        //     this.saludar = function () {
+        //         console.log("Hola, soy " + this.nombre + " " + this.apellido);
+        //     }
+        // }
+
+        // //El empleado hereda de la persona
+        // function Empleado(nombre, apellido, puesto) {
+        //     Persona.call(this, nombre, apellido);  //Como si fuera un super en java
+        //     //Persona(nombre, apellido);  //Como si fuera un super en java
+        //     this.puesto = puesto;
+        // }
+
+        // //function pepe() {} //Es lo mismo hacer pepe() que pepe.call()
+
+        // //Operador Instance of
+        // console.log("Antes de definir la herencia bien:")
+        // let pers = new Persona("Juan", "Perez");
+        // let empe = new Empleado("Juan", "Perez", "Gerente");
+        // console.log("empe instanceof Empleado :" + (empe instanceof Empleado));  //true
+        // console.log("empe instanceof Persona :" + (empe instanceof Persona));  //false   << No reconocio la herencia....
+        // console.log("pers instanceof Persona :" + (pers instanceof Persona));  //true
+
+        // //Solucion (Antes del ES6 asi habia que definir la herencia)
+        // console.log("Despues de definir la herencia bien:")
+        // Empleado.prototype = Object.create(Persona.prototype);
+        // Empleado.prototype.constructor = Empleado;
+
+        // console.log("empe instanceof Empleado " + (empe instanceof Empleado));  //true
+        // console.log("empe instanceof Persona " + (empe instanceof Persona));  //false   << No reconocio la herencia....
+        // console.log("pers instanceof Persona " + (pers instanceof Persona));  //true*/
+
+        //Ejemplo 6 : Herencia con ES6
+        class Persona {
+            constructor(nombre, apellido) {
+                this.nombre = nombre;
+                this.apellido = apellido;
+            }
+
+            saludar() {
+                console.log("Hola, soy " + this.nombre + " " + this.apellido);
+            }
+        }
+
+        class Empleado extends Persona {
+            constructor(nombre, apellido, puesto) {
+                super(nombre, apellido);
+                this.puesto = puesto;
+            }
+        }
+
+        let pers = new Persona("Juan", "Perez");
+        let empe = new Empleado("Juan", "Perez", "Gerente");
+
+
+        console.log("Herencia ES6:")
+        console.log("empe instanceof Empleado " + (empe instanceof Empleado));  //true
+        console.log("empe instanceof Persona " + (empe instanceof Persona));  //true
+        console.log("pers instanceof Persona " + (pers instanceof Persona));  //true*/
+        console.log("pers instanceof Empleado " + (pers instanceof Empleado));  //false*/
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
