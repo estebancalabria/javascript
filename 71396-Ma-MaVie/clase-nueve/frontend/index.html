@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peliculas</title>
+    <style>
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        th, td{
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        window.addEventListener("load",() =>{
+            fetch('http://localhost:3000/api/pelicula')
+            .then(response => response.json())
+            .then(data => {
+                
+                const tbody = document.querySelector("tbody");
+
+                data.forEach(pelicula => {
+                    const tr = document.createElement("tr");
+                    const tdTitulo = document.createElement("td");
+                    tdTitulo.textContent = pelicula.titulo;
+                    const tdDirector = document.createElement("td");
+                    tdDirector.textContent = pelicula.director;
+                    tr.appendChild(tdTitulo);
+                    tr.appendChild(tdDirector);
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => {
+                console.log(error)});
+        })
+
+    </script>
+</head>
+<body>
+    <h1>Mis Peliculas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Director</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "titulo": "The Shawshank Redemption",
+    "director": "Frank Darabont"
+  },
+  {
+    "id": 2,
+    "titulo": "The Godfather",
+    "director": "Francis Ford Coppola"
+  }
+]
