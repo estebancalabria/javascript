@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="loginStyles.css">
+    <script>
+
+        //Sin Encapsulamiento
+        class Usuario{
+            constructor(username, password){
+                this.username = username;
+                this.password = password;
+            }
+
+        }
+
+
+        //Vamos a hacer que la Sesion sea un singleton para que no se puedan crear varias
+        let Sesion = (function(){
+          
+            //La variable instancia es privada en la iife, no se puede acceder desde afuera
+            let instancia = null;
+
+            class Sesion{
+
+                id = Math.random();
+                usuario = null;
+
+                constructor(){
+                   //Si hago un new Sesion() me tira un
+                   if (instancia){
+                        throw new Error("Error: No se puede crear Mas de una instancoa instancia de Sesion");
+                   }
+                   else{
+                       instancia = this;
+                   }
+                }
+
+                estaLogueado(){
+                    return this.usuario != null;
+                }
+
+                getUsuario(){
+                    return this.usuario;
+                }
+
+                setUsuario(usuario){
+                    this.usuario = usuario;
+                }
+
+                logout(){
+                    this.usuario = null;
+                }
+            }
+
+            let sessionProxyHandler = {
+                get  : function(target, prop, receiver){
+                    if (localStorage.getItem("sesionGlobal")){
+                        instancia.usuario = JSON.parse(localStorage.getItem("sesionGlobal")).usuario;
+                        instancia.id = JSON.parse(localStorage.getItem("sesionGlobal")).usuario;
+                    }
+                    return Reflect.get(target, prop, receiver);
+                },
+
+                set : function(target, prop, value){
+                    localStorage.setItem("sesionGlobal", JSON.stringify(target));
+                    //Reflect.set(target, prop, value);
+                    t[prop] = value;
+                }
+            }
+
+          
+            Sesion.getInstance = function(){
+                if(instancia == null){
+                    instancia = new Proxy(new Sesion(), sessionProxyHandler);
+                }
+                return instancia;
+            }
+
+
+            return Sesion;
+        })();
+
+        window.addEventListener("load",()=>{
+
+            update();
+
+            //funcion IMPURA
+            function update(){ 
+                document.querySelector("#login").style.display = Sesion.getInstance().estaLogueado() ? "none" :"block";
+                document.querySelector("#bienvenida").style.display = Sesion.getInstance().estaLogueado() ? "block" :"none";;
+                document.querySelector("#username").innerText = Sesion.getInstance().getUsuario();
+            }
+ 
+            document.querySelector("#login button").addEventListener("click", ()=>{
+                let username = document.querySelector("#login input[type='text']").value;
+                let password = document.querySelector("#login input[type='password']").value;
+                let usuario = new Usuario(username, password);
+                Sesion.getInstance().setUsuario(usuario);
+                alert("Usuario logueado")
+                update();
+            }); 
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <button id="guardarLS">Guardar En Local Storage</button>
+        <script>
+            document.querySelector("#guardarLS").addEventListener("click", ()=>{
+                alert("Guardo")
+                localStorage.setItem("ejemploLS", "Datos guardados en Local Storage");
+            })
+        </script>
+        
+        <button id="leerLS">Local Storage</button>
+        <script>
+            document.querySelector("#leerLS").addEventListener("click", ()=>{
+                alert(localStorage.getItem("ejemploLS"))
+            })
+        </script>
+    </div>
+    <div id="login">
+        <form>
+            <h2>Iniciar sesión</h2>
+            <input type="text" placeholder="Usuario" required>
+            <input type="password" placeholder="Contraseña" required>
+            <button type="button">Entrar</button>
+        </form>
+    </div>
+    <div id="bienvenida">
+        <h1>Bienvenido a la pagina usuario 
+            <span id="username"></span>
+        </h1>
+
+       <button id="logout">Cerrar Sesion</button>
+       <script>
+              document.querySelector("#logout").addEventListener("click", ()=>{
+                Sesion.getInstance().logout();
+                update();
+              })
+       </script> 
+    </div>
+</body>
+</html>

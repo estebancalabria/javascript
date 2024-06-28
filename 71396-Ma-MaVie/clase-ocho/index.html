@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="encapuslamiento.js"></script>
+    <script>
+        //Var vs Let
+        var variableConVar = "Hola";
+        let variableConLet = "Hola";
+
+        let nombre = "Juan"; //jjjm... la declaro con let a proposito para el ejemplo
+        const apellido = "Perez";
+
+        //Es una funcion impura
+        //Usa variables que no recibe como parametro (globales)
+        //No es recomendable usar variables globales
+        //Funcion MALARDA
+        function saludar(){
+            alert("Hola " + nombre + " " + apellido);
+        }
+
+        //Es una funcion pura
+        //Fncion BUENARDA
+        function saludarPura(nombre, apellido){
+            alert("Hola " + nombre + " " + apellido);
+        }
+
+        //saludar(); Me muestra un alert con "Hola Juan Perez"
+        //Si alguien viene y pone nombre="Pedro:
+        //saludar(); Me muestra un alert con "Hola Pedro Perez"
+        //Ahora supongamos que yo NO QUIERO que otra persona cambie la variable nombre
+        //o que la pueda leer porque es un detalle mio. De mi implementacion
+        //Entonces aqui nececesito el encapsulamiento
+
+        //let p = new Persona("Juan","PereZ")
+        //p.nombre  //Tampoco quiero que se lea el atributo desde afuera
+        //'Juan'
+        //p.nombre = "pepe" //No quiero que se modique el atributo desde afuera
+        //'pepe'    
+        //p.saludar()
+        //encapuslamiento.js:16 Hola, soy pepe PereZ
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
