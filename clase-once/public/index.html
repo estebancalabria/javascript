@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <hr />
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required />
+
+        <br />
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required />
+
+        <br />
+
+        <button id="btnLogin" type="button">Login</button>
+
+        <div id="divResultadoLogin">
+
+        </div>
+        <script>
+            document.getElementById('btnLogin').addEventListener('click', function () {
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value
+                    })
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    document.getElementById('divResultadoLogin').innerHTML = data.mensaje;
+                    window.location.href = data.redireccion;
+                    document.getElementById('username').value = "";
+                    document.getElementById('password').value = "";
+                }).catch(function (error) {
+                    document.getElementById('divResultadoLogin').innerHTML = error.message;
+                    console.error('Error:', error);
+                });
+            });
+        </script>
+    </form>
+    <hr />
+
+    <h1>Register</h1>
+    <hr />
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="txtNewUsername" required />
+
+        <br />
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="txtNewPassword" required />
+
+        <br />
+
+        <button id="btnRegister" type="button">Register</button>
+
+        <div id="divResultadoRegistro">
+
+        </div>
+
+        <script>
+            document.getElementById('btnRegister').addEventListener('click', function () {
+                fetch('/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: document.getElementById('txtNewUsername').value,
+                        password: document.getElementById('txtNewPassword').value
+                    })
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    document.getElementById('divResultadoRegistro').innerHTML = data.mensaje;
+                    document.getElementById('txtNewUsername').value = "";
+                    document.getElementById('txtNewPassword').value = "";
+                }).catch(function (error) {
+                    document.getElementById('divResultadoRegistro').innerHTML = error.message;
+                    console.error('Error:', error);
+                });
+            });
+        </script>
+    </form>
+    <hr />
+</body>
+
+</html>

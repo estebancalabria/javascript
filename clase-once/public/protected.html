@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Los codigos de lanzamiento de los misiles nucleares son:
+    </h1>
+    <h2>
+        alfa-zulu-beta-zulu-alfa-alfa-beta
+    </h2>
+
+    <button>
+        Pedir Datos Al Backend
+    </button>
+    <div id="divDatos">
+
+    </div>
+
+    <script>
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.querySelector('button').addEventListener('click', function () {
+            fetch('/api/datos', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization':  getCookie('token')
+                    //'authorization':  "token Invalido"
+                }
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                document.getElementById('divDatos').innerHTML = JSON.stringify(data);
+            }).catch(function (error) {
+                document.getElementById('divDatos').innerHTML = JSON.stringify(error);
+            });
+        });
+    </script>
+
+    <a href="/logout">Logout</a>
+</body>
+</html>
