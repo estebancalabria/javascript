@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!--Cookies de terceros
+    <script src="www.googlenalitics.com/javascript.js"></script>-->
+</head>
+<body>
+    <header>
+        <h1>Curso Javascript Avanzado</h1>
+        <h1>Clase Diez</h1>
+    </header>
+    <main>
+        <button id="btnGuardarCookieJS">Guardar Coookie</button>
+        <button id="btnLeerCookieJS">Leer Coookie</button>
+        <script>
+
+            function getCookie(nombre){
+                const cookies = document.cookie.split(';');
+
+                for(let i = 0; i < cookies.length; i++){
+                    const cookie = cookies[i].split('=');
+
+                    if(cookie[0].trim() === nombre){
+                        return cookie[1];
+                    }
+                }
+                return null;
+            }
+
+            document.getElementById('btnGuardarCookieJS').addEventListener('click', function(){
+                const nombre = "session-id";
+                const valor = Math.random();
+                const fechaDeExpiracion = new Date(2024,9,1).toUTCString();
+                document.cookie = `${nombre}=${valor}; expires=${fechaDeExpiracion}; path=/`;
+                document.getElementById('divResultado').innerHTML = `Cookie Guardada: ${nombre}=${valor}`;
+            });
+
+            document.getElementById('btnLeerCookieJS').addEventListener('click', function(){
+                let valor = getCookie('session-id');
+                document.getElementById('divResultado').innerHTML = `Cookie Leida: session-id=${valor}`;
+            });
+        </script>
+        <div id="divResultado">
+
+        </div>
+    </main>
+
+</body>
+</html>

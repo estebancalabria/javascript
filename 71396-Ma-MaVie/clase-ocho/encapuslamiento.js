@@ -61,13 +61,13 @@
 
 
 //Modulos de Javascript
-//Se implementan con IFFE
+//Se implementan con IIFE
 (function(){
     //Esta variable es una variable Privada dentro de mi ifee
-    let nombre_iffe = 'Juan'; //Es solo accesible dentro de la funcion
+    let nombre_iife = 'Juan'; //Es solo accesible dentro de la funcion
 
     //Ahora esta clase es privada dentro de mi IIFE
-    //El iffe es necesario para que no se conozca la clase Persona fuera
+    //El iife es necesario para que no se conozca la clase Persona fuera
     //de este contexto
     class Persona {
             //Opcion 1 para encapsulamiento, usar _ para indicar que es privado
