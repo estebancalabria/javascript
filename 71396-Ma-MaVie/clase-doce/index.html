@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Ejemplo de desestructuracion con objetos
+        const persona = {
+            nombre: 'Juan',
+            apellido: 'Perez',
+            edad: 30
+        };
+
+        //En lugar de hacer esto 
+        //const nombre = persona.nombre;
+        //const apellido = persona.apellido;
+
+        //Desestructuramos el objeto
+        const {nombre, apellido} = persona;
+        console.log(nombre);
+        console.log(apellido);
+
+
+        //Los generadores son funciones especiales que pueden ser detenidas 
+        //y reanudadas en cualquier momento
+        function* contador(){
+            //en vez de return se usa yield
+            yield 1;
+            yield 2;
+            yield 3;
+            yield 4;
+            yield 5;
+        }
+    </script>
+</head>
+<body>
+    <h1>Ejemplo de Generadores</h1>
+    <div id="valor"></div>
+    <button>
+        Mostrar Proximo Valor
+    </button>
+    <script>
+
+        //Con Desestructuracion de objetos
+        /*
+        //Se crea una instancia del generador
+        const gen = contador();
+        //Se obtiene el primer valor
+        document.querySelector('button').addEventListener('click', ()=>{
+            //Para invocar el generador se usa next
+            //Desestructuramos el objeto que retorna next
+            const {value, done} = gen.next();
+            if(!done){
+                document.querySelector('#valor').textContent = value;
+            }else{
+                document.querySelector('#valor').textContent = 'Fin del contador';
+            }
+        });
+        */
+
+        //Sin Desestructuracion de objetos
+        //Se crea una instancia del generador
+        const gen = contador();
+        //Se obtiene el primer valor
+        document.querySelector('button').addEventListener('click', ()=>{
+            //Para invocar el generador se usa next
+            //Desestructuramos el objeto que retorna next
+            const next = gen.next();
+            if(!next.done){
+                document.querySelector('#valor').textContent = next.value;
+            }else{
+                document.querySelector('#valor').textContent = 'Fin del contador';
+            }
+        });
+    </script>
+
+    <h1>Ejemplo de Generadores con For of</h1>
+    <script>
+        //Un generador se puede iterar con un for of
+        const c = contador();
+        for(let valor of gen){
+            console.log(valor);
+        }
+    </script>
+
+    <script>
+        async function* personajesRickAndMorty(){
+            url = 'https://rickandmortyapi.com/api/character';
+            hayMasPaginas = true;
+            while (hayMasPaginas){
+                const resp = await fetch(url);
+                const data = await resp.json();
+                //? es un operador de encadenamiento opcional
+                //en inglés se llama optional chaining
+                url = data.info?.next;
+                if (url) {
+                    yield data.results;
+                }else{
+                    hayMasPaginas = false;
+                }
+            }
+           
+        }
+    </script>
+
+    <button id="btnPersonajes">
+        Mostrar Personajes
+    </button>
+
+    <ul id="ulPersonajes">
+
+    </ul>
+
+    <script>
+        const genPersonajes = personajesRickAndMorty();
+
+        document.querySelector('#btnPersonajes').addEventListener('click', async ()=>{
+            result = await genPersonajes.next();
+            personajes = result.value;
+            const ul = document.querySelector('#ulPersonajes');
+            ul.innerHTML = '';
+            personajes.forEach((personaje)=>{                    
+                const li = document.createElement('li');
+                li.textContent = personaje.name;
+                ul.appendChild(li);
+            });
+        });
+    </script>
+
+</body>
+</html>
