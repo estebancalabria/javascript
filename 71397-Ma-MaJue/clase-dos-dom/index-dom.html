@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /*div es un selector que selecciona todos los div*/
+        div{
+            width: 100vw;
+            height: 50px;
+            margin: 10px;
+            border: 1px solid black;
+            text-align: center;        
+            line-height: 50px;
+         }
+    </style>
+
+    <script>
+        //Document Object Model (DOM)
+        //El principal es el objeto document que representa el documento HTML
+        //Metodos de Document para consultas:
+        // - querySelectorAll() : Retorna una lista de nodos que cumplan con el selector
+        // - getElementById(id) : Retorna un nodo que tenga el id especificado
+        // - querySelector(selector) : Retorna el PRIMER nodo que cumpla con el selector
+        // - getElementsByTagName(tagName) : Retorna una lista de nodos que tengan el tagName especificado
+        // - getElementsByClassName(className) : Retorna una lista de nodos que tengan la clase especificada
+        //Metodos de Document para manipulacion:
+        // - createElement(tagName) : Crea un nodo del tipo especificado
+        // - appendChild(node) : Agrega un nodo al final de los hijos del nodo
+        // - insertBefore(newNode, referenceNode) : Inserta un nodo antes de otro nodo
+        //Propiedades y metodos de los elementos 
+        // - innerText : Retorna el texto interno del nodo
+        // - innerHTML : Retorna el html interno del nodo
+        // - childElementCount : Retorna la cantidad de hijos del nodo
+        // - remove() : Elimina el nodo del documento
+    </script>
+
+    <script>
+        //Broser Object Model BOM
+        //El principal objeto es el objeto window que representa la ventana del navegador
+        //Eventos
+        //- DOMCoontentLoaded : Se ejectua cuando se construyo el dom en memoria, pero
+        //                     no se han cargado los recursos externos (imagenes, css)   
+        //- load : Se ejecuta cuando se termina de cargar la pagina y todos los recursos externos
+                      
+    </script>
+        
+    <script>
+        //El window es un objeto del BOM (Browser Object Model) que representa la ventana del navegador
+        //window.addEventListener9("DOMContentLoaded", ()=>{
+        window.addEventListener("load", ()=>{
+            //Itero los divs : Forma 1 (forEach)
+            document.querySelectorAll("div").forEach( (div)=>{
+                //Ponerle a todos los divs un color aleatorio
+                div.style.backgroundColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+            })
+
+            //Itero los divs impares con un selector y pseudo-clase de css
+            document.querySelectorAll("div:nth-child(odd)").forEach( (div)=>{
+                //Le pongo el borde rojo y dotted
+                div.style.border = "4px dotted red";
+            })
+
+
+            //Itero los divs : Forma 2 (for)
+            /*let divs = document.querySelectorAll("div");
+            for (let div of divs){
+            }*/
+        })
+    </script>
+
+</head>
+<body>
+    <section>
+        <h3>Botonera de Acciones</h3>
+
+        <select class="combo" id="selDivs">
+            <option value="div1">Div 1</option>
+            <option value="div2">Div 2</option>
+            <option value="div3">Div 3</option>
+            <option value="div4">Div 4</option>
+            <option value="div5">Div 5</option>
+        </select>
+
+        <button id="btnCambiarDiv">Cambiar Texto Div</button>
+        <script>
+            document.getElementById("btnCambiarDiv").addEventListener("click", ()=>{
+                
+
+                //Forma alternativa (y diria que no recomendada)
+                //let selector = document.getElementsByTagName("select")[0];
+                let selector = document.getElementsByClassName("combo")[0];
+                let idDiv = selector.value;
+               
+
+                //let div = document.getElementById("idDiv");
+                let div = document.querySelector(`#${idDiv}`);
+                
+                let textoAnterior = div.innerText;
+                div.innerText =  `Texto Nuevo ${div.innerText}`;
+                
+                setTimeout(()=>{
+                    div.innerText = textoAnterior;
+                }, 2000);
+            })
+        </script>
+
+        <button id="btnAgregarDiv">Agregar Div</button>
+
+        <script>
+            document.getElementById("btnAgregarDiv").addEventListener("click", ()=>{
+                //Creo un elemento nuevo (en memoria)
+                //let cantidadDivs = document.getElementById("divs").childElementCount;
+                let cantidadDivs = document.getElementById("divs").children.length;
+
+                /*let div = document.createElement("div");
+                div.innerText = `Div ${cantidadDivs+1}`;
+                div.id = `div${cantidadDivs+1}`;
+
+                //Lo agrego al documento al padre de los divs
+                document.getElementById("divs").appendChild(div);
+                //Tambien lo puedo agregar al principio
+                //document.querySelector("#divs").insertBefore(div, document.querySelector("#div1"));
+
+                //Vamos a agregarlo a la lista de opciones del select
+                let option = document.createElement("option");
+                option.value = `div${cantidadDivs+1}`;
+                option.innerText = `Div ${cantidadDivs+1}`;
+                document.querySelector("#selDivs").appendChild(option);*/
+
+                //En general en vez de usar el appendChild, se puede usar directamente innerHTML
+                //mas practico muchas veces
+                document.querySelector("#divs").innerHTML += `<div id=div${cantidadDivs+1}>Div ${cantidadDivs+1}</div>`;
+                document.querySelector("#selDivs").innerHTML += `<option value="div${cantidadDivs+1}">Div ${cantidadDivs+1}</option>`;
+            })
+        </script>
+
+        <button id="btnEliminarDiv">
+            Eliminar Div (x id)
+        </button>
+
+        <script>
+            document.getElementById("btnEliminarDiv").addEventListener("click", ()=>{
+                //Obtengo el id del select
+                let idDivEliminar = document.getElementById("selDivs").value;
+                //Obtengo el div a eliminar
+                let divEliminar = document.getElementById(idDivEliminar);
+                //Lo elimino
+                divEliminar.remove();
+                //Elimino la opcion del select
+                document.querySelector(`option[value="${idDivEliminar}"]`).remove();
+            })
+        </script>
+
+        <button id="btnEliinarUltimoDiv">
+            Eliminar Ultimo Div
+        </button>
+
+
+        <script>
+            document.getElementById("btnEliinarUltimoDiv").addEventListener("click", ()=>{
+                //Obtengo el ultimo div
+                //let divEliminar = document.querySelector("#divs div:last-child");
+                //Lo elimino
+                //divEliminar.remove();
+                //Elimino la opcion del select
+                //document.querySelector(`option[value="${divEliminar.id}"]`).remove();
+
+                //Con RemoveChild
+                let divs = document.getElementById("divs");
+                let divEliminar = divs.lastElementChild;
+                divs.removeChild(divEliminar);
+                
+            })
+        </script>
+    </section>
+
+    <section id="divs">
+        <div id="div1">
+            Div 1
+        </div>
+        <div id="div2">
+            Div 2
+        </div>
+        <div id="div3">
+            Div 3
+        </div>
+        <div  id="div4">
+            Div 4
+        </div>
+        <div id="div5">
+            Div 5
+        </div>
+    </section>
+</body>
+</html>
