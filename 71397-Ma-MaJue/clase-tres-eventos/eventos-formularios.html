@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Eventos Formularios</h1>
+    <p>Ejemplo 1 : Evento submit y prevent default</p>
+    <form id="form1">
+        <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre">
+        <input type="submit" value="Enviar">
+    </form>
+    <script>
+        //Manejo de eventos con Javascript en linea
+        //Aca el parametro e es un objeto Event que encapsula los datos del evento
+        document.getElementById('form1').onsubmit = function(e) {
+            console.log('Evento submit');
+            console.dir(e.constructor.name);
+            console.dir(e);
+            //Para evitar que se envie el formulario
+             e.preventDefault();
+        }
+    </script>
+
+<p>Ejemplo 2 :Atributos de validacion y eventos</p>
+<!--Si queemos que no valide tenemos el atributo novalidate-->
+<form id="form2">
+    <div>
+        <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" required>
+    </div>
+    <div>
+        <input type="text" name="apellido" id="nombre" placeholder="Ingrese su apellido" required pattern="^[A-Z][a-z]*">
+    </div>
+    <input type="submit" value="Enviar">
+    <button id="form2_button" type="button">Enviar sin submit</button>
+</form>
+<script>
+    //Manejo de eventos con Javascript en linea
+    //Aca el parametro e es un objeto Event que encapsula los datos del evento
+    //Este ejecuta las validaciones
+    document.getElementById('form2').onsubmit = function(e) {
+        //Esto no se ejecuta nunca si no se cumple la validacion por el submit
+        console.log('Evento submit');
+        console.dir(e.constructor.name);
+        console.dir(e);
+        //Para evitar que se envie el formulario
+         e.preventDefault();
+    }
+
+    document.getElementById('form2_button').onclick = function(e) {
+        //Se ejecuta siempre sin importar la validacion
+        console.log('Evento click en el boton');
+        const form = document.getElementById('form2');
+        if (form.checkValidity()) {
+            console.log('Formulario valido');
+        } else {
+            console.log('Formulario invalido');
+        }
+    }
+
+</script>
+
+</body>
+</html>

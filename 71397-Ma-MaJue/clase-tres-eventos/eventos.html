@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            border: 1px solid black;
+            padding: 10px;
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eventos y Mas Eventos</h1>
+
+
+    <p>Ejemplo 1 : Evento inline : Obstrusive Javascript : Javascript Intrusivo</p>
+    <script>
+        function eventoSimple(event) {
+            alert('Evento simple');
+            console.dir(event.constructor.name);
+            console.dir(event);
+        }
+    </script>
+    <!-- event es una palabra reservada que repsesenta un objeto Event que encapsula los datos del evento-->
+    <div onclick="eventoSimple(event)">
+    <!--<div onclick="eventoSimple(evento)"> si le pongo otro nombre que no sea event el click tira error-->
+    <!--<div onclick="eventoSimple(this)"><!--Otra alternativa : pasa directamente el div-->
+    <!--<div onclick="eventoSimple()"><!--Otra alternativa : Sin Parametros-->
+        Evento simple Click Obstrusive Javascript
+    </div>
+
+    <p>Ejemplo 2 : Unobstrusive Javascript : Javascript no Intrusivo </p>
+    <!--El HTML no sae nada del javascript : Preferida a la anterior-->
+    <div id="div2">
+        Evento simple Click Unobstrusive Javascript
+    </div>
+    <script>
+        //Manejo de eventos con Javascript en linea
+        //Aca el parametro e es un objeto Event que encapsula los datos del evento
+        document.getElementById('div2').onclick = function(e) {
+            alert('Este nunca se ejecuta porque se reemplaza por el de abajo');
+            console.dir(e.constructor.name);
+            console.dir(e);
+        }
+
+        //Con funcion flecja
+        document.getElementById('div2').onclick = (e) => {
+            alert('Evento simple (el de abajo que reemplaza)');
+            console.dir(e.constructor.name);
+            console.dir(e);
+        }
+    </script>
+
+    <p>Ejemplo 3 : Unobstusive javascript con addEventListener</p>
+    <div id="div3">
+        Evento simple Click Unobstrusive Javascript con addEventListener
+    </div>
+    <script>
+        //Manejo de eventos con Javascript en linea
+        //Aca el parametro e es un objeto Event que encapsula los datos del evento
+        document.getElementById('div3').addEventListener('click', function(e) {
+            alert('Evento simple primer');
+            console.dir(e.constructor.name);
+            console.dir(e);
+        });
+        document.getElementById('div3').addEventListener('click', function(e) {
+            alert('Evento simple segundo evento');
+        });
+    </script>
+
+    <p>Ejemplo 4 :Fase Captura y Burbujeo</p>
+    <div id="divEj4_1">
+        Abuelo
+        <div id="divEj4_2">
+            Padre
+            <div id="divEj4_3">
+                Hijo
+            </div>
+        </div>        
+    </div>
+    <script>
+        //Eventos con fase de captura , {capture: true} o true
+        document.getElementById('divEj4_1').addEventListener('click', function(e) {
+            alert('Captura Abuelo');
+        }, {capture: true});
+        document.getElementById('divEj4_2').addEventListener('click', function(e) {
+            alert('Captura Padre');
+            //Detiene la propagacion del evento. Detiene tanto la fase de captura como la de burbujeo
+            e.stopPropagation(); 
+        }, {capture: true});
+        document.getElementById('divEj4_3').addEventListener('click', function(e) {
+            alert('Captura Hijo');
+        }, {capture: true});
+
+        //Eventos con fase de burbujeo
+        document.getElementById('divEj4_1').addEventListener('click', function(e) {
+            alert('Burbujeo Abuelo');
+        });
+        document.getElementById('divEj4_2').addEventListener('click', function(e) {
+            alert('Burbujeo Padre');
+        });
+        document.getElementById('divEj4_3').addEventListener('click', function(e) {
+            alert('Burbujeo Hijo');
+        });
+    </script>
+
+    <p>Ejemplo 5 : Prevent Default</p>
+    <input type="text" id="inputEj5">
+    <div id="divEj5"></div>
+    <script>
+        document.getElementById('inputEj5').addEventListener('keypress', function(e) {
+            const teclasProhibidas = new Set(['a', 'b', 'c', 'd', 'e','1']);
+            //Previene la accion por defecto del evento
+            if (teclasProhibidas.has(e.key)) {
+                e.preventDefault(); //Previene la accion por defecto del evento
+                document.getElementById('divEj5').innerText = 'Tecla prohibida ' + e.key;
+            }
+             
+        });
+    </script>
+
+</body>
+</html>

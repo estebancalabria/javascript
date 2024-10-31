@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            border: 1px solid black;
+            padding: 10px;
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eventos 2</h1> 
+
+    <p>Ejemplo : Eventos del Raton</p>
+    <div id="divMouse">
+        Use el raton por aqui...
+    </div>
+    <script>
+        //Pruebo los evetnos mousenter, mouseleave, mousedown, mouseup, mousemove
+        //Muestro lo que pasa en la consola con las coordenadas
+        let divMouse = document.getElementById('divMouse');
+
+        divMouse.addEventListener('mouseenter', (e) => {
+            console.log('mouseenter ' + e.clientX + ' ' + e.clientY);
+        });
+        divMouse.addEventListener('mouseleave', (e) => {
+            console.log('mouseleave ' + e.clientX + ' ' + e.clientY);
+        });
+        divMouse.addEventListener('mousedown', (e) => {
+            console.log('mousedown ' + e.clientX + ' ' + e.clientY);
+        });
+        divMouse.addEventListener('mouseup', (e) => {
+            console.log('mouseup ' + e.clientX + ' ' + e.clientY);
+        });
+        divMouse.addEventListener('mousemove', (e) => {
+            console.log('mousemove ' + e.clientX + ' ' + e.clientY);
+        });
+    </script>
+</body>
+</html>
