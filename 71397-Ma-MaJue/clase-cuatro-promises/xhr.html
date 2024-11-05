@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        textarea{
+            width: 100%;
+        }
+
+        .flex{
+            display: flex;
+        }
+        .flex input {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Un viaje en el tiempo...</h1>
+    <h2>El objeto http Request</h2>
+    <textarea id="txtXHR" cols="30" rows="10" placeholder="Aca se ve lo que devuelve esa url"></textarea>
+    <div class="flex">
+        <input type="url" id="urlXHR" placeholder="Ingrese una url">
+        <button id="btnXHR">Recuperar datos con XMLHttpRequest</button>
+    </div>
+
+    <script>
+        document.getElementById('btnXHR').addEventListener('click', () => {
+            //El objeto XMLHttpRequest es un objeto que nos permite hacer peticiones a un servidor
+            //No se usa mucho hoy en dia, pero es importante conocerlo
+            //Fue la base de lo que se conocia como AJAX
+            let xhr = new XMLHttpRequest();
+            let url = document.getElementById('urlXHR').value;
+            xhr.open('GET', url, true);
+            //El callback ( lo podemos hacer tambien con un addEventListener)
+            xhr.onreadystatechange = function(){
+                //El readyState 4 significa que la peticion fue completada y la respuesta esta lista
+                if (xhr.readyState == 4 && xhr.status == 200){
+                    document.getElementById('txtXHR').value = xhr.responseText;
+                }
+            }
+            xhr.send();
+        });
+    </script>
+
+    <hr />
+    <h2>Convirtiendo el objeto XMLHttpRequest en una promesa</h2>
+    <script>
+        let get = (url) => {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState == 4 && xhr.status == 200){
+                        resolve(xhr.responseText);
+                    }
+                }
+                xhr.send();
+            });
+        }
+    </script>
+    <div>
+        <textarea id="txtXHR_Promise" cols="30" rows="10" placeholder="Aca se ve lo que devuelve esa url"></textarea>
+        <div class="flex">
+            <input type="url" id="urlXHR_Promise" placeholder="Ingrese una url">
+            <button id="btnXHR_Promise">Recuperar datos con XMLHttpRequest</button>
+        </div>
+        <script>
+            /*document.getElementById('btnXHR_Promise').addEventListener('click', () => {
+                let url = document.getElementById('urlXHR_Promise').value;
+                get(url).then((data) => {
+                    document.getElementById('txtXHR_Promise').value = data;
+                });
+            });*/
+
+            //Lo anterior rescrito con async/await
+            document.getElementById('btnXHR_Promise').addEventListener('click', async () => {
+                let url = document.getElementById('urlXHR_Promise').value;
+                let data = await get(url);
+                document.getElementById('txtXHR_Promise').value = data;
+            });
+        </script>
+    </div>
+</body>
+</html>

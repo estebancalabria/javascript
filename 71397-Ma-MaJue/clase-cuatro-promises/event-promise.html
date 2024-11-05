@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let  sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        
+        //En una funncion flecha con {} tengo que poner el return ()=>{ return ...}
+        //Con parentesis o sin nada el return es implicito () => ...
+        let click = (element) => (
+            new Promise( function(resolve, reject){
+                element.addEventListener('click', () => {
+                    resolve();
+                });
+            })
+        )
+    </script>
+</head>
+<body>
+    <button id="btnPromesas">Click me!</button>
+    <p id="pResultadoPromesas"></p>
+
+    <script>
+        //IIFE : Immediately Invoked Function Expression
+        (async function(){
+            let boton = document.getElementById('btnPromesas');
+            
+            /*await click(boton);
+            boton.disabled = true;
+            document.getElementById('pResultadoPromesas').innerHTML = 'Has clickeado el boton una vez!';
+            await sleep(2000);
+            boton.disabled = false;
+
+            await click(boton);
+            boton.disabled = true;
+            document.getElementById('pResultadoPromesas').innerHTML = 'Has clickeado el boton otra vez!';
+            await sleep(2000);
+            boton.disabled = false;
+
+            await click(boton);
+            boton.disabled = true;
+            document.getElementById('pResultadoPromesas').innerHTML = 'Has clickeado el boton otra vez mas!';
+            await sleep(2000);
+            boton.disabled = false;*/
+            let veces = 0;
+            while (true){
+                await click(boton);
+                boton.disabled = true;
+                document.getElementById('pResultadoPromesas').innerHTML = `Has clickeado el boton ${veces} veces!`;
+                await sleep(2000);
+                boton.disabled = false;
+                veces++;
+            }
+        })();
+    </script>
+</body>
+</html>

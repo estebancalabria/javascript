@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Bienvenidos al mundo asincrono!</h1>
+    <hr />
+    <h1>Ejemplo de Evento</h1>
+    <button id="btnEvento">Click me!</button>
+    <p id="pResultadoEvento"></p>
+    <script>
+        document.getElementById('btnEvento').addEventListener('click', () =>{
+            document.getElementById('pResultadoEvento').innerHTML = 'Has clickeado el boton!';
+        });
+    </script>
+
+    <hr />
+    <h1>Ejemplo de Timeout</h1>
+    <button id="btnTimer">Click me!</button>
+    <p id="pResultadoTimer"></p>
+    <script>
+        document.getElementById('btnTimer').addEventListener('click', () =>{
+            document.getElementById('pResultadoTimer').innerHTML = 'Timer Iniciado. Esperando 3 segundos!';
+            setTimeout(() => {
+                document.getElementById('pResultadoTimer').innerHTML = 'Han pasado 3 segundos!';
+            }, 3000);
+        });
+    </script>
+
+    <hr />
+    <h1>Ejemplo de Callback Hell</h1>
+    <button id="btnCallbackHell">Click me!</button>
+    <p id="pResultadoCallbackHell"></p>
+    <script>
+        document.getElementById('btnCallbackHell').addEventListener('click', () =>{
+            document.getElementById('pResultadoCallbackHell').innerHTML = 'Iniciando Callback Hell!';
+            setTimeout(() => {
+                document.getElementById('pResultadoCallbackHell').innerHTML = 'Primer Timeout!';
+                setTimeout(() => {
+                    document.getElementById('pResultadoCallbackHell').innerHTML = 'Segundo Timeout!';
+                    setTimeout(() => {
+                        document.getElementById('pResultadoCallbackHell').innerHTML = 'Tercer Timeout!';
+                        setTimeout(() => {
+                            document.getElementById('pResultadoCallbackHell').innerHTML = 'Cuarto Timeout!';
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        });
+    </script>
+    
+    <hr />
+    <h1>Ejemplo de promesas</h1>
+    <button id="btnPromesas">Click me!</button>
+    <p id="pResultadoPromesas"></p>
+    <script>
+        function sleep(ms) {
+            //Una promesa es un objeto que acepta dos callbacks, uno para el exito y otro para el fallo
+            //return new Promise( resolve => setTimeout(resolve, ms) );
+            //O bien asi
+            return new Promise(function(resolve, reject) {
+                setTimeout(resolve, ms);
+            });
+
+            document.getElementById("btnPromesas").addEventListener('click', () => {
+                document.getElementById('pResultadoPromesas').innerHTML = 'Iniciando Promesas!';
+                
+                sleep(1000).then(() => {
+                    document.getElementById('pResultadoPromesas').innerHTML = 'Primer Timeout!';
+                    return sleep(1000);
+                }).then(() => {
+                    document.getElementById('pResultadoPromesas').innerHTML = 'Segundo Timeout!';
+                    return sleep(1000);
+                }).then(() => {
+                    document.getElementById('pResultadoPromesas').innerHTML = 'Tercer Timeout!';
+                    return sleep(1000);
+                }).then(() => {
+                    document.getElementById('pResultadoPromesas').innerHTML = 'Cuarto Timeout!';
+                });
+            });
+        }
+    </script>
+    <hr />
+
+    <h1>Ejemplo de async/await (vamos a hacer las cosas realmente lejibles)</h1>
+    <button id="btnAsyncAwait">Click me!</button>
+    <p id="pResultadoAsyncAwait"></p>
+    <script>
+        document.getElementById('btnAsyncAwait').addEventListener('click', async function () {
+            document.getElementById('pResultadoAsyncAwait').innerHTML = 'Iniciando Async/Await!';
+            /*await sleep(1000);
+            document.getElementById('pResultadoAsyncAwait').innerHTML = 'Primer Timeout!';
+            await sleep(1000);
+            document.getElementById('pResultadoAsyncAwait').innerHTML = 'Segundo Timeout!';
+            await sleep(1000);
+            document.getElementById('pResultadoAsyncAwait').innerHTML = 'Tercer Timeout!';*/
+            for (let i = 0; i < 50; i++) {
+                await sleep(1000);
+                document.getElementById('pResultadoAsyncAwait').innerHTML = `${i + 1} Timeout!`;
+            }
+        });
+    </script>
+
+</body>
+</html>
