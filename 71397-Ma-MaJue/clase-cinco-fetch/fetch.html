@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        textarea{
+            width: 100%;
+        }
+
+        #divUrlSearch{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #divUrlSearch input{
+            flex:1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        class Error404 extends Error {
+            constructor(url) {
+                super(`Error 404: ${url} not found`);
+                this.name = "404Error";
+                this.status = 404;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Uso de Fetch y Api Rest</h1>
+    <hr />
+    <textarea id="txtResultadoFetch" cols="30" rows="10" placeholder="Aca se el resultado de hacer fetch"></textarea>
+    <div id="divUrlSearch">
+        <input type="text" id="url" placeholder="Escriba la url" />
+        <button id="btnFetch">Obtener Datos Fetch</button>
+        <button id="btnFetchAsyncAwait">Obtener Datos Fetch Async/Await</button>
+    </div>
+
+    <script>
+        document.getElementById('btnFetch').addEventListener('click', function(){
+            let url = document.getElementById('url').value;
+            //Realizamos un GET a la url
+            fetch(url)  
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('txtResultadoFetch').value = data
+                })
+                .catch(error => {
+                    document.getElementById('txtResultadoFetch').value = "Error al hacer fetch"
+                    console.dir(error)
+                });
+        });
+
+        document.getElementById('btnFetchAsyncAwait').addEventListener('click', async function(){
+            let url = document.getElementById('url').value;
+            try {
+                let response = await fetch(url);
+                
+                if (response.status === 404) {
+                    throw new Error404(url); //Esto va a hacer que se ejecute el bloque catch
+                }
+
+                let data = await response.text();
+                document.getElementById('txtResultadoFetch').value = data
+            } catch (error) {
+
+                //Discriminamos el error
+                /*if (error instanceof TypeError) {
+                    document.getElementById('txtResultadoFetch').value = "Error de Cors o proble de red"
+                } else {
+                    document.getElementById('txtResultadoFetch').value = "Error generico"
+                }*/
+               //Forma mas pro de escribir lo mismo con operador ternario
+               document.getElementById('txtResultadoFetch').value = 
+                    error instanceof TypeError 
+                    ? "Error de Cors o proble de red" 
+                    : error instanceof Error404 ? error.message : "Error generico"; 
+                
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
