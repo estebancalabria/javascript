@@ -1,4 +1,3 @@
-
 # Repo
 
 * Javascript Algoritmos y Estructuras de Datos
@@ -30,6 +29,14 @@
 * Sweetalert2
 > https://sweetalert2.github.io/
 
+# Librerias CSS
+
+* Bootstrap Documentation
+> https://getbootstrap.com/docs/5.0/getting-started/introduction/
+
+* Bootstrap CDN
+> https://www.bootstrapcdn.com/
+
 # Extensiones VSCode
 
 * Console Ninja
@@ -42,3 +49,6 @@
 
 * Comentar Varias lineas : [Ctrl]+[/]
 * Shift+Alt+a  --> comenta todo un bloque de código previamente seleccionado
+* [Ctr]l+[D] para seleccionar varis veces lo mismo
+* [Ctrl]+[Alt]+[Shift]+[Flecha Abajo] : MEGACURSOR
+* [ALT]+[CLICK MOUSE VARIOS LUGARES] : Cursor Multiple
