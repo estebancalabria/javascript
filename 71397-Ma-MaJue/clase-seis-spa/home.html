@@ -1,0 +1,60 @@
+<section>
+    <h2>Bienvenidos a mi sitio </h2>
+    <article>
+        Aca vendemos muchas cosas, como por ejemplo, cosas.
+    </article>
+    <hr />
+    <section class="productos">
+        <h3>Productos destacados</h3>
+        <article>
+            <h4>Producto 1</h4>
+            <p>Descripcion del producto 1</p>
+        </article>
+        <article>
+            <h4>Producto 2</h4>
+            <p>Descripcion del producto 2</p>
+        </article>
+        <article>
+            <h4>Producto 3</h4>
+            <p>Descripcion del producto 3</p>
+        </article>
+        <article>
+            <h4>Producto 4</h4>
+            <p>Descripcion del producto 4</p>
+        </article>
+        <article>
+            <h4>Producto 5</h4>
+            <p>Descripcion del producto 5</p>
+        </article>
+    </section>  
+</section>
+
+<script>
+    //Por lo general para hacer el eval un poco mas seguro
+    //suelo no ejecutar funciones sino definirlas
+
+    function onLoadSection() {
+        //alert('Se cargo la seccion');
+    }
+
+    function onScrollSection() {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
+               let div = document.createElement('div');
+               div.innerHTML =  `<article>
+                                   <h4>Producto Nuevo</h4>
+                                   <p>Descripcion del producto Nuevo</p>
+                                </article>;`
+               document.querySelector('.productos').appendChild(div);
+        }
+    };
+    
+    //Detectamos cuando llegamos al final de la página
+    //Tenemos un Scroll infinito
+    /*window.addEventListener("scroll", function(){
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
+            let p = document.createElement('p');
+            p.innerText = 'Elemento Creado Dinamicamente';
+            document.querySelector('main').appendChild(p);
+        }
+    });*/
+</script>
