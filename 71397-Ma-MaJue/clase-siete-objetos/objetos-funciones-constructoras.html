@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //Objeto : Es una forma de agrupar varias variables (que pueden ser funciones)
+
+        //Clasico
+        function foo() {
+            console.log("Soy una funcion");
+        }
+
+        var foo2 = function() {
+            console.log("Soy otra funcion");
+        }
+
+        //Moderno
+        var foo3 = () => {
+            console.log("Soy otra funcion");
+        }
+
+        //Las funciones son a la vez un tipo de dato en Javascript
+        //En javascript se dice que las funciones son ciudadanos de primera clase
+        console.log(typeof foo)
+
+        //En objetos existe el concepto de constructor
+        //Un constructor es una funcion que se utiliza para crear / inicializar un objeto
+        //En javascript no existe una palabra reservada para definir un constructor (ni originalmente una clase)
+        //En javascript todas las funciones pueden ser utilizadas como constructores
+        var obj = new foo();
+
+        //En javascript cualquier funcion se puede utilizar para crear un objeto
+        //Para saber si el programador creo la funcion no para invocarla sino para crear objetos
+        //se sabe porque el nombre de la funcion empieza con mayuscula
+        //Esta funcion empieza con mayuscula por lo que se sabe que es un constructor
+        //(Convencion de nombres)
+        function Automovil(marca){
+            this.marca = marca;
+        }
+
+        var auto = new Automovil("Toyota");
+        //es lo parecido que hacer
+        var otroAuto = {
+            marca: "Toyota"
+        };
+        console.log(auto.marca);
+        console.log(otroAuto.marca);
+
+
+        //Hay clases conocidas en javascript 
+        //Object, Array, Function, Date, RegExp, Error
+        //Y tambien hay sintaxis para crear objetos literales
+        let o = new Object();
+        let o2 = {};
+        //Los objetos so dinaicos, se pueden agregar propiedades en tiempo de ejecucion
+        //los objetos son diccionarios
+        //Agrego una propiedad dinamica
+        o2.propiedad = "valor";
+        console.log(typeof Object); 
+        console.log(typeof o);
+
+        //Lo mismo con un array
+        let a = new Array();
+        let a2 = [];
+
+        //O con expresiones regulares
+        let r = new RegExp("\\d+");
+        let r2 = /\d+/;
+
+        //Javascript tiene qzuca sintaxis para invocar cieras funciones constructoras
+        //----------------------------------------
+        console.log("----------------------------------------------------------------")
+
+        //Cada objeto tiene una referencia a su funcion constructora
+        let automovil = new Automovil("Toyota");
+        console.log(automovil.constructor);
+        console.log(automovil.constructor === Automovil);
+        console.log(automovil instanceof Automovil);
+
+        //Veamos esta diferencia
+        let auto22 = { 
+            marca: "Toyota"
+        }
+        console.log(auto22.constructor); //En este caso el constructor es Object
+
+
+        //Cuando una funcion esta pensada para ser una funcion constructora
+        //Aparece el this
+
+        //Es parecido hacer
+        var juan = {}
+        juan.nombre = "Juan"; //Agrego una propiedad dinamica, pero es un objeto Object
+
+        //A hacer
+        function PersonaF(nombre) {
+            //El this es una referencia al objeto que se esta creando con new
+            this.nombre = nombre; //Aca aparece el this
+        }
+        var hermanoDeJuan = new PersonaF("Juan 2"); //Aca se crea un objeto de tipo Persona
+
+        //En javascript no hay clases, pero se pueden simular
+        //A partir de la version ES6 se agrego la palabra reservada class
+        //Pero es solo azucar sintactico
+
+        class PersonaC {
+            constructor(nombre) {
+                this.nombre = nombre;
+            }
+        }
+
+        /*class PersonaC2 {
+            nombre;
+        }*/
+
+        console.log(typeof PersonaC); //function, sigue siendo una funcion constructora
+
+        //----------------------------------------
+        console.log("----------------------------------------------------------------")
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

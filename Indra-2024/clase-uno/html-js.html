@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="nombre" placeholder="Ingrese su nombre">
+    <button id="saludar" onclick="saludarUsuario()">Saludar</button>
+    <div id="salida"> <!-- Esta es una caja -->
+    </div>
+
+    <script>
+        //Objetos y metodos que vienen con el lengiaje
+        // console
+        // alert
+        // array
+
+        function saludarUsuario() {
+            //DOM - Document Object Model
+            const texto = document.getElementById("nombre").value;
+            document.getElementById("salida").innerHTML = `Hola ${texto}`;
+        }
+
+        //Metodos del dom
+        // getElementById
+        // .innerHTML
+        // .value
+    </script>
+
+</body>
+</html>

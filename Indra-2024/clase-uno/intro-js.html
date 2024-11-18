@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // Muestro una alerta en el navegador
+        // alert("Bienvenido a JavaScript");
+ 
+        // Muestro un mensaje en la consola del navegador
+        console.log("Bienvenido a JavaScript - Curson de Indra Clase 1");
+
+        //Declaracion de variables
+        //var mensaje = "Juan";  //La forma tradicional no recomendada siempre
+        //let mensaje = "Juan"; //Para variables que voy a modificar
+        //const mensaje = "Bienvenidos a las variables en JS"; //Para variables que no voy a modificar
+        //console.log(mensaje);
+
+        //let mensaje = "gdf"; //Me da error porque ya esta declarada 
+
+        //Tipos de datos
+        //string
+        //number   
+        //boolean
+        //undefined
+        //object
+        //function
+        
+        //Variables string
+        //let nombre = "Juan"; //String con comillas dobles
+        //let nombre = 'Juan'; //String con comillas simples
+        let nombre = `Juan`; //String con comillas francesas o backticks
+        //console.log(nombre);
+        //console.log(typeof nombre);
+        console.log(`La variable nombre contiene "${nombre}" y es de tipo ${typeof nombre}`);
+        console.log("La variable nombre contiene " + nombre + " y es de tipo " + typeof nombre);
+
+        //Variables numericas
+        let edad = 30;
+        console.log(`La variable edad contiene ${edad} y es de tipo ${typeof edad}`);
+
+        //Mutabilidad de tipos de variable
+        let variable = "Cadena"
+        console.log(`La variable variable contiene ${variable} y es de tipo ${typeof variable}`);
+        variable = 30;
+        console.log(`La variable variable contiene ${variable} y es de tipo ${typeof variable}`);
+
+        //Que pasa si a una variable no le pongo el tipo de dato
+        let desconocido; //`undefined`
+        console.log(`La variable desconocido contiene ${desconocido} y es de tipo ${typeof desconocido}`);
+
+        //Variables booleanas
+        let esMayor = true; //true o false
+        console.log(`La variable esMayor contiene ${esMayor} y es de tipo ${typeof esMayor}`);
+        if (esMayor) {
+            console.log("Es mayor de edad");
+        } else {
+            console.log("Es menor de edad");
+        }
+
+        //Variables de tipo objeto definida como JSON (JavaScript Object Notation)
+        let persona = {
+            nombre: "Juan",
+            edad: 30,
+            esMayor: true
+        };
+        //console.log(`La variable persona contiene ${persona} y es de tipo ${typeof persona}`); sale [object Object]
+        //console.log(`La variable persona contiene el nombre ${persona.nombre} y es de tipo ${typeof persona}`); 
+        console.log(`La variable persona contiene el nombre ${JSON.stringify(persona)} y es de tipo ${typeof persona}`); 
+
+        //Variables de tipo función
+        let foo = function() {
+            console.log("Hola desde la función foo");
+        };
+        console.log(`La variable foo contiene ${foo} y es de tipo ${typeof foo}`);                     
+    </script>
+</head>
+<body>
+    <h1>Hola Mundo</h1>
+</body>
+</html> 

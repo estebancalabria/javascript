@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+       //En javascript cuando se crea un objeto nuevo se copia de un objeto que ya existe
+       //Ese objeto que se copia se llama prototipo 
+       //El primer prototipo es Object.prototype ya viene creado
+       //En javascript todos los objetos tienen un prototipo
+       //Para acceder al prototipo de un objeto se utiliza la propiedad __proto__
+
+       //Diferencia entre clase y prototipo
+       //En una clase se define la estructura de un objeto pero "esta creada"
+       //En un prototipo se define la estructura de un objeto pero "esta creado"
+       var a = {};
+       console.log(a.__proto__);
+       console.log(a.constructor);
+
+       //Avanzamos un pasito mas
+       //Cuando se declara una funcion constructora
+       // -Se crea la funcion persona
+       // -Se crea un objeto prototype asociado a la persona, (Persona.prototype)
+       function Persona(nombre){
+           this.nombre = nombre;
+       }
+       console.log(Persona.prototype); //El prototipo que se va a usar para crear una persona
+
+       //Hay tres propiedades que quiero que entendamos
+       //  prototype : es el prototipo que se va a utilizar (copiar) para crear un objeto
+       //  __proto__ : es el prototipo de un objeto que se uso para crear un objeto
+       //  constructor : es la funcion que se utilizo para crear un objeto
+       let pers = new Persona("Juan");
+       console.log(pers.__proto__ === Persona.prototype); 
+       console.log(pers.__proto__.__proto__ === Object.prototype); 
+
+       //PARA QUE SIRVEN LOS PROTOTIPOS
+       var juan = new Persona("Juan");
+       var pedro = new Persona("Pedro");
+
+       /*juan.saludar = function(){
+           console.log("Hola, soy " + this.nombre);
+       }
+
+       juan.saludar();
+       pedro.saludar(); //Error. La funcion es de juan*/pedro
+       
+       //Como hago si quiero que la funcion saludar este disponible para todos los objetos de tipo persona
+       Persona.prototype.saludar = function(){
+           console.log("Hola, soy " + this.nombre);
+       }
+       juan.saludar();
+       pedro.saludar();
+
+       //En otros lenguajes no le puedo agregar una funcion a un objeto que ya existe
+       //en javascript si puedo
+       /*a = [1,2,3,4];
+       Array.prototype.longitud = function(){
+           return this.length;
+       }
+       console.log(a.longitud());
+       */
+       
+       //Definimos la longitud como una propiedad de solo lectura
+       a = [1,2,3,4];
+       Object.defineProperty(Array.prototype, "longitud", {
+           get: function(){
+               return this.length;
+           }
+       });
+       console.log(a.longitud);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Vieron que les habia dicho que las funciones son ciudadanos de primera clase
+        //Las funciones son objetos en javascript (de primera clase)
+        //Las funciones pueden tener propiedades y metodos
+        //Cuando creo una funcion se hace un new Function
+
+        function matematica(){
+            //Aca lo estoy usando como un espacio de nombres
+        }
+
+        matematica.sumar = function(a,b){
+            return a + b;
+        }
+
+        matematica.restar = function(a,b){
+            return a - b;
+        }
+
+        console.log(matematica.sumar(1,2));
+
+
+        //La funcion object tiene propiedades y metodos ya definidos
+        console.dir(Object)
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    <div>
+        Num1 : <input type="number" id="num1" value="0">
+    </div>
+    <div>
+        Num2 : <input type="number" id="num2" value="0">
+    </div>
+    <hr />
+    <button onclick="sumar()"> + </button>
+    <div id="salida">
+    </div>
+
+    <script>
+        function sumar(){
+            let numero1 = document.getElementById("num1").value;
+            let numero2 = document.getElementById("num2").value;
+
+            console.log("Antes de la conversion...")
+            console.log("El tipo de numero1 es " + typeof numero1); //string
+            console.log("El tipo de numero1 es " +typeof numero2); //string
+
+            //forma 1 : parseInt
+            //numero1 = parseInt(numero1);
+            //numero2 = parseInt(numero2);
+
+            //forma 2 : +
+            //numero1 = +numero1;
+            //numero2 = +numero2;
+
+            //forma 3 : Number
+            numero1 = Number(numero1);
+            numero2 = Number(numero2);
+
+            console.log("Despues de la conversion...")
+            console.log("El tipo de numero1 es " + typeof numero1); //int
+            console.log("El tipo de numero1 es " +typeof numero2); //int
+            
+
+            //El operador + para strings es la concatenacion
+            document.getElementById("salida").innerHTML = numero1 + numero2;
+        }
+    </script>
+</body>
+</html>

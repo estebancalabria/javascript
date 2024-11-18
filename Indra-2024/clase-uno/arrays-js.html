@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Metodos de los arrays
+        //[] - Declarar un array
+        //length - Longitud del array
+        //push - Agregar un elemento al final del array
+        //unshift - Agregar un elemento al principio del array
+        //splice - Agregar un elemento en una posicion especifica
+        //slice - Extraer un subarray
+        //... - Spread operator
+
+        let nombres = ["Juan", "Pedro", "Maria", "Ana"];
+        console.log(`El arreglo nombres es de tipo ${typeof nombres} y contiene (${nombres})`);
+        console.log(`La longitud del arreglo es ${nombres.length}`);    
+        console.log(`El primer elemento del arreglo (posicion 0) nombres es ${nombres[0]}`);
+        console.log(`El ultimo elemento del arreglo (length-1) nombres es ${nombres[  nombres.length - 1 ]}`);
+
+        //Agregar un elemento al final del arreglo
+        nombres.push("Carlos");
+        console.log(`Luego de agregar un elemento contiene (${nombres})`);
+        //Otra forma de agregar un elemento es con el operador spread (spread operator) ...
+        nombres = [...nombres, "Luis"];
+        console.log(`Luego de agregar un elemento contiene (${nombres})`);
+        //Agrego un al principio del array
+        nombres.unshift("Jose");
+        //con el spread
+        nombres = ["Pepe", ...nombres];
+        console.log(`Luego de agregar elementos al principio contiene (${nombres})`);
+
+        //Agregar un elemento la posicion 3
+        nombres.splice(3, 0, "Raul");
+        console.log(`Luego de agregar un elemento en la posicion 3 contiene (${nombres})`);
+        //Con el spread
+        nombres = [...nombres.slice(0, 3), "Raul", ...nombres.slice(3)];
+        console.log(`Luego de agregar elementos en la posicion 3 contiene (${nombres})`);
+
+        //Itero un array con for
+        //For clasicos
+        for (let i = 0; i < nombres.length; i++) {
+            console.log(`El elemento en la posicion ${i} es ${nombres[i]}`);
+        }
+
+        //for of
+        for (let nombre of nombres) {
+            console.log(`El nombre es ${nombre}`);
+        }
+
+        //for each
+        nombres.forEach(function (nombre, index) {
+            console.log(`El nombre es ${nombre} y esta en la posicion ${index}`);
+        });
+
+    </script>
+</head>
+<body>
+    <h1>Arrays en JavaScript</h1>
+</body>
+</html>
