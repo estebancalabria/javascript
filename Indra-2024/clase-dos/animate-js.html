@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .negrita{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1></h1>
+
+    <script>
+        //Entetendiendo el setInterval y setTimeout
+        /*let i = 0;  //Variable global : No hacerlo
+
+        function ejecutarCadaSegundo(){
+          console.log("Hola " + i);
+          i++;
+        };
+
+        setInterval(ejecutarCadaSegundo, 1000);*/
+
+        //Ejemplo 2
+        // let titulo = "Bienvenidos a la clase dos de Javascript 🤓🤓";
+        // let letras = 0;
+        // function mostarLetra(){        
+        //     if(letras < titulo.length){
+        //         //document.querySelector("h1").textContent += titulo[letras];
+        //         document.querySelector("h1").textContent += titulo.charAt(letras);
+        //         letras++;
+        //     }
+        // }
+        // setInterval(mostarLetra, 100);
+
+        // Ejemplo 3
+        // let titulo = "Bienvenidos a la clase dos de Javascript 🤓🤓";
+        // let letras = 0;
+
+        // let mostarLetra = function (){        
+        //     if(letras < titulo.length){
+        //         //document.querySelector("h1").textContent += titulo[letras];
+        //         document.querySelector("h1").textContent += titulo.charAt(letras);
+        //         letras++;
+        //     }
+        // }
+
+        // setInterval(mostarLetra, 100);
+
+        //Ejemplo 4 - Arrow function (funciones flecha)
+        // let titulo = "Bienvenidos a la clase dos de Javascript 🤓🤓";
+        // let letras = 0;
+
+        // let mostarLetra = () => {        
+        //     if(letras < titulo.length){
+        //         //document.querySelector("h1").textContent += titulo[letras];
+        //         document.querySelector("h1").textContent += titulo.charAt(letras);
+        //         letras++;
+        //     }
+        // }
+
+        // setInterval(mostarLetra, 100);
+
+        //Ejemplo 5 : Funciones anonimas
+        // let titulo = "Bienvenidos a la clase dos de Javascript 🤓🤓";
+        // let letras = 0;
+
+        // setInterval(function (){
+        //     if(letras < titulo.length){
+        //         //document.querySelector("h1").textContent += titulo[letras];
+        //         document.querySelector("h1").textContent += titulo.charAt(letras);
+        //         letras++;
+        //     }
+        // }, 100);
+
+        //Ejemplo 6 : Funciones anonimas flecha
+        let titulo = "Bienvenidos a la clase dos de Javascript 🤓🤓";
+        let letras = 0;
+
+        setInterval(()=>{
+            if(letras < titulo.length){
+                //document.querySelector("h1").textContent += titulo[letras];
+                document.querySelector("h1").textContent += titulo.charAt(letras);
+                letras++;
+            }
+        }, 100);
+
+        //Bonus track
+        //En javascript las funciones son ciudadanos de primera clase
+        function pepe(){
+            console.log("Hola");
+        }
+
+        console.log(typeof pepe);
+    </script>
+</body>
+</html>

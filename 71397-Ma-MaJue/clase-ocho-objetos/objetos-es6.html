@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script>
+        class Contador{
+            constructor(){
+                this.valor = 0;
+                //Le asignamos una funcion que se ejecutara cuando cambie el valor
+                this.onChanged = null; 
+                //Es una buena practica que los objetos no manejen aspectos de la 
+                //interfaz grafica, por el evento lo manejamos desde el exterior
+                //Si una clase maneja la interfaz grafica le decimos Componente
+            }
+
+            incrementar(){
+                this.valor++;
+                this.onChanged && this.onChanged(this);
+            }
+
+            decrementar(){
+                this.valor--;
+                this.onChanged && this.onChanged(this);
+            }
+
+            reset(){
+                this.valor = 0;
+                this.onChanged && this.onChanged(this);
+            }
+        }
+
+        let miContador = new Contador();
+        //Una practica es poner el objeto en el objeto global (window) 
+        //para poder accederlo desde la consola y desde cualquier parte del codigo
+        window.miContador = miContador; //El objeto contador es accesible desde la consola
+
+        miContador.onChanged = function(contador){
+            document.getElementById('contador').innerText = contador.valor;
+        }
+
+        
+    </script>
+</head>
+<body>
+    <div class="container text-center">
+        <h1> Contador </h1>
+        <h2 id="contador">0</h2>
+        <button id="btn btn-primary" onclick="miContador.incrementar()">Incrementar</button>
+        <button id="btn btn-danger" onclick="miContador.reset()">Reset</button>
+        <button id="btn btn-primary" onclick="miContador.decrementar()">Decrementar</button>
+    </div>
+</body>
+</html>
