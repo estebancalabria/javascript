@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        console.log("Muestro la fecha actual por pantall")
+        const ahora = new Date();
+        console.log(ahora);
+        console.log(`Estamos en el ${ahora.getFullYear()}. Es el dia ${ahora.getDate()} del mes ${ahora.getMonth() + 1}`); 
+
+        let tomorrow = new Date(ahora);
+        tomorrow.setDate(ahora.getDate() + 1);
+        console.log("Maniana sera el dia " + tomorrow);
+        
+
+        console.log("----------------------------------------------------------------")
+        console.log("Muestro la fecha de mi cumpleaños")
+        const cumple = new Date(1980, 8, 20); //En javacript los meses empiezan en 0
+        //const cumple = new Date(1980, 8, 20, 23, 30, 0, 0); //En javacript los meses empiezan en 0
+        console.log(cumple);
+
+        console.log("---------------------------------------------------------------")
+        console.log("Muestro la fecha de mi cumpleaños a partir de un string")
+        //const cumple2 = new Date("1980-09-20");
+        const cumple2 = new Date("1980-09-20T23:30:00");
+        console.log(cumple2);
+        console.log(cumple2.toLocaleDateString());
+        console.log(cumple2.toLocaleDateString("en-US"));
+
+    </script>
+</head>
+<body>
+    <input type="date" id="fecha">
+    <button>Obtener Fecha</button>
+    <script>
+        let fechaInput = document.querySelector("#fecha");
+        fechaInput.value = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
+
+        const boton = document.querySelector("button");
+        boton.addEventListener("click", () => {
+            const fecha = document.querySelector("#fecha").value;
+            console.log(new Date(fecha));
+        });
+    </script>
+</body>
+</html>

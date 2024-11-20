@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let texto = prompt("Introduce un texto y verems si primera posicion en mayuscula y resto en miniscula");
+        //let expresion = new RegExp("^[A-Z][a-z]*$")
+        let expresion = /^[A-Z][a-z]*$/
+
+        if (expresion.test(texto)){
+            alert("Empieza en mayuscula");
+        } else {
+            alert("No empieza en mayuscula");
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
