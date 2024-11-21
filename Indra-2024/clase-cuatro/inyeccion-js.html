@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener("load", ()=>{
+            //Obtengo los parametros del query string
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get("q");
+            document.getElementById("parametro").innerHTML = query;
+        })
+    </script>
+</head>
+<body>
+    El parametro recibido en la URL es:
+    <div id="parametro">
+
+    </div>
+
+    <input type="text" id="algo" placeholder="Ingrese algo a mostrar">
+    <button>Mostrar</button>
+    <script>
+        document.querySelector("button").addEventListener("click", ()=>{
+            let algo = document.getElementById("algo").value;
+            document.getElementById("parametro").innerHTML = algo;
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script>
+        /*
+        function Persona(nombre, apellido, edad){
+            //El this hace referencia al objeto que se esta creando
+            //En general el this se refiere al contexto de ejecucion
+
+            //Una funcion constructora me permite validar los datos que se le pasan
+            //Esto se llanan excepciones, cuando se lanza una excepcion el programa se detiene
+            if (!nombre) { throw new Error("El nombre es obligatorio") };
+            if (!apellido) { throw new Error("El apellido es obligatorio") };
+            if (!edad) { throw new Error("La edad es obligatoria") };
+            if (nombre.length<2) { throw new Error("El nombre es muy corto") };
+    
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.edad = edad;
+
+            //Metodo
+            this.saludo = function(){
+                return `Hola, soy ${this.nombre} ${this.apellido}`;
+            }
+
+            //Propiedad (como metodo encubierto)
+            Object.defineProperty(this, "nombreCompleto", {
+                get: function(){
+                    return `${this.nombre} ${this.apellido}`;
+                },
+            });
+        }
+        */
+        class Persona {
+            constructor(nombre, apellido, edad) {
+                if (!nombre) { throw new Error("El nombre es obligatorio") };
+                if (!apellido) { throw new Error("El apellido es obligatorio") };
+                if (!edad) { throw new Error("La edad es obligatoria") };
+                if (nombre.length < 2) { throw new Error("El nombre es muy corto") };
+
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.edad = edad;
+            }
+
+            get nombreCompleto() {
+                return `${this.nombre} ${this.apellido}`;
+            }
+
+            saludo() {
+                return `Hola, soy ${this.nombre} ${this.apellido}`;
+            }
+        }
+        //Esto es en realidad azucar sintactico
+        //por detras es lo mismo que la funcion constructora
+        console.log(typeof Persona); //function. En realidad es una funcion constructora
+
+
+        window.addEventListener("load", () => {
+            let dummy = new Persona("Juan", "Perez", 30);
+            //console.log(typeof dummy.edad); //number
+            let form = document.querySelector("form");
+            for (propiedad in dummy) {
+
+                let div = document.createElement("div");
+                let label = document.createElement("label");
+                let input = document.createElement("input");
+                input.classList.add("form-control");
+                input.setAttribute("type", "text");
+                input.setAttribute("name", propiedad);
+                form.appendChild(div);
+                div.appendChild(label);
+                div.appendChild(input);
+                label.innerHTML = propiedad;
+            }
+            //Agrego un boton
+            let boton = document.createElement("button");
+            boton.classList.add("btn", "btn-primary");
+            boton.innerHTML = "Procesar";
+            boton.type = "button";
+            boton.addEventListener("click", procesarForm);
+            form.appendChild(boton);
+        })
+
+        function procesarForm() {
+            //Vamos a armar un objeto persona con los datos del formulario
+            let form = document.querySelector("form");
+            let persona = new Persona(form.nombre.value, form.apellido.value, parseInt(form.edad.value));
+            console.log(persona);
+            console.log(JSON.stringify(persona));
+            //Vamos a mandar el objeto persona a un servidor en la url /api/persona
+            //Para eso vamos a usar fetch
+            //Para mandar los datos al servidor en vez de usar el metodo GET vamos a usar el metodo POST
+            //Para eso vamos a tener que configurar el fetch
+
+            //Para que esto funcione previamente levante un servidor en el puerto 3000 
+            //con json-server --watch db.json
+            fetch("http://localhost:3000/personas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(persona) //El objeto persona se convierte a string JSON
+            }).then((response) => {
+                if (response.ok) {
+                    alert("Persona enviada correctamente");
+                    form.reset();
+                } else {
+                    throw new Error("Error en la llamada al servidor " + response.statusText);
+                }
+            }).catch((error) => {
+                alert("Error en la llamada al servidor " + error.message);
+            })
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Formulario de una Persona</h1>
+        <form>
+
+        </form>
+    </main>
+
+</body>
+
+</html>

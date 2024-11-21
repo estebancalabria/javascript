@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //clasico
+        /*let persona = {
+            nombre: "Juan",
+            apellido: "Perez",
+            edad: 30
+        }*/
+
+        //Funcion constructora
+        function Persona(nombre, apellido, edad){
+            //Una funcion constructora puede definir validaciones
+            if (!nombre) { throw new Error("Falta el nombre"); }
+            if (!apellido) { throw new Error("Falta el apellido"); }
+            if (!edad) { throw new Error("Falta la edad"); }
+            if (nombre.length < 3) { throw new Error("El nombre es muy corto"); }
+
+            //Propiedades
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.edad = edad;
+
+            this.saludo = function(){
+                return `Hola soy ${this.nombre} ${this.apellido} y tengo ${this.edad} años`;
+            }
+
+            //Definimos una propiedad que se llama nombre Completo
+            //propiedad Calculada
+            Object.defineProperty(this, "nombreCompleto", {
+                get: function(){
+                    return `${this.nombre} ${this.apellido}`;
+                },
+            });
+
+            //Redefinimos el metodo toString que ya tiene un comportamiento por defecto
+            //sobreescritura de metodos
+            this.toString = function(){
+                return `Persona: ${this.nombreCompleto} ${this.edad}`;
+            }
+        }
+
+        console.group("Ejemplo 1 - Persona Valida");
+        try{
+            //let persona = new Persona("Juan", "Perez", 30);
+            console.log("Creo una persona");
+            let persona = new Persona("Juan", "Perez", 30);
+            console.log("Llamo al saludar");
+            console.log(persona.saludo()); //lo metodos se ejecutan con ()
+            console.log("Muestro la propiedad nombre completo");
+            console.log(persona.nombreCompleto); //Como es una propiedad no lleva ()
+            console.log("Muestro la persona");
+            console.log(persona.toString());
+        }catch(error){
+            console.log(error);
+        }
+        console.groupEnd();
+
+
+        console.group("Ejemplo 2 - Persona Invalida");
+        try{
+            //trato de crear una persona invalida
+            console.log("Tratando de crear una persona invalida")
+            let persona = new Persona("Juan", "Perez");
+            console.log("Muestro la persona");
+            console.log(persona.toString());
+        }catch(error){
+            console.error(error);
+        }
+        console.groupEnd();
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

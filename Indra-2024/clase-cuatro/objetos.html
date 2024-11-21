@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objetos</title>
+    <script>
+        // Creacion de un Objeto por JSON
+        console.group("Objetos");
+        console.log("%cCreacion de un Objeto por JSON",'background-color:blue; font-size: 20px; color:white; font-weight:bold; text-decoration:underline');
+        console.warn("Advertencia: Vamos a aprender un monton de objetos. Continue a discrecion.")
+        //Este seria de la clase "Object" que es la clase base de todos los objetos en javascript
+        let persona = {
+            nombre: "Juan",     //propiedad   =>    clave:valor
+            apellido: "Perez",
+            edad: 30,
+
+            //Los objetos tambien pueden tener metodos
+            saludar: function(){
+                console.log(`Hola, soy ${this.nombre} ${this.apellido}`);
+            }
+        };
+        console.log(persona);
+        console.log(`Soy ${persona.nombre} ${persona.apellido} de ${persona.edad} años`);
+        persona.saludar();
+        console.groupEnd();
+
+        //Reflexion de un Objeto
+        console.group("Reflexion de un Objeto");
+        console.log(`Soy ${persona["nombre"]} ${persona["apellido"]} de ${persona["edad"]} años`); //Accceder a las propiedades de un objeto por medio de corchetes
+        //Listr las ppiedades de un objeto con un for
+        for (let propiedad in persona){
+            /*if (typeof persona[propiedad] != "function"){ 
+                console.log(propiedad + "  :  " + persona[propiedad]);
+            }*/
+
+            //Otra forma de hacerlo en vez de usar el if con el operador && para que solo se ejecute si es verdadero
+            //One liner
+            (typeof persona[propiedad] != "function") && console.log(propiedad + "  :  " + persona[propiedad]);
+        }
+        console.groupEnd();
+        
+        //La contra de esta manera de declarar objetos es que no hay manera de diferenciar el tipo dobjetos
+        let automovil = {
+            marca: "Toyota",
+            modelo: "Corolla",
+        };
+        console.log("typeof automovil ==> " + typeof automovil);
+        console.log("typeof persona == typeof automovil ==> " + (typeof persona == typeof automovil)); //True  =>  Ambos son objetos. No hay manera de diferenciarlos
+
+        //Los objetos son creados por una funcion constructora que en este caso se llama implicitamente
+        //Funcion constructora. Se accede con objeto.constructor, es una propiedad reservada de los objetos
+        console.log("Funcion constructora de la persona " + persona.constructor.name); //Funcion constructora
+        console.log("Funcion constructora del automovil " + automovil.constructor.name); //Funcion constructora
+        //Las funciones constructoras a diferencia de las funciones convencioales se escriben con la primera letra en mayuscula
+        //En javascript ya existe la funcion constructora Object que es la que se usa para crear objetos
+
+        //Al margen.. las funciones en javascript tambien son objetos y tiene propiedades y metodos
+        console.log("--------------------------------------------------------------------------------")
+        console.group("Funciones como objetos");
+        function ejemplo(p1,p2){
+            console.log("Hola");
+        }
+        console.log(ejemplo); //contendio
+        console.log("Nombre Funcion " + ejemplo.name); //Nombre de la funcion
+        console.log("Cantidad de parametros Funcion " + ejemplo.length); //Numero de parametros
+        ejemplo.call() //Llama a la funcion es lo mismo que ejemplo()
+        console.groupEnd();
+
+        console.log("--------------------------------------------------------------------------------")
+        console.warn("Lo que vemos ahora no tiene que ver con lo anterior. Podria ir en otro archivo")
+        console.group("Funciones constructoras");
+        //El concepto de Funcion constructora y el de clase en otros lenguajes es similar
+        function Persona(nombre, apellido, edad){
+            //El this hace referencia al objeto que se esta creando
+            //En general el this se refiere al contexto de ejecucion
+
+            //Una funcion constructora me permite validar los datos que se le pasan
+            //Esto se llanan excepciones, cuando se lanza una excepcion el programa se detiene
+            if (!nombre) { throw new Error("El nombre es obligatorio") };
+            if (!apellido) { throw new Error("El apellido es obligatorio") };
+            if (!edad) { throw new Error("La edad es obligatoria") };
+            if (nombre.length<2) { throw new Error("El nombre es muy corto") };
+    
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.edad = edad;
+
+            //Metodo
+            this.saludo = function(){
+                return `Hola, soy ${this.nombre} ${this.apellido}`;
+            }
+
+            //Propiedad (como metodo encubierto)
+            Object.defineProperty(this, "nombreCompleto", {
+                get: function(){
+                    return `${this.nombre} ${this.apellido}`;
+                },
+            });
+        }
+
+        //Para crear un objeto utilizando la funcion constructora usamos la palabra reservada new
+        let juan = new Persona("Juan", "Perez", 30);
+        console.dir(juan);
+        console.log(juan.saludo());
+        console.log("Property nombreCompleto es " + juan.nombreCompleto); //No se pone parentesis porque es una propiedad no un metodo
+        //El typeof de cualquier objeto es object
+        console.log("El typeof de juan es " + typeof juan);
+        console.log("LA funcion constructora para juan es " + juan.constructor.name);
+        //Para saber si un objeto fue creado por una funcion constructora se puede usar instanceof
+        console.log("juan instanceof Persona ==> " + (juan instanceof Persona)); //True
+
+        //Creamos una persona incorrecta
+        try {
+            let incorrecto = new Persona("Juan", "Perez"); //Falta la edad
+            //Si la creacion de la persona es incorrecta el programa se detiene y no se ejecuta lo que sigue
+            console.log("Persona incorrecta creada satisfactoriamente")
+        }catch(e){
+            console.error("Error Capturado " + e.message);
+        }
+
+        console.groupEnd();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

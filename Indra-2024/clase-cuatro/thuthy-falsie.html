@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Verdadero implicito - Truthy
+        //Falso implicito - Falsy
+
+        //Para los numeros : 0 es falso, cualquier otro numero es verdadero
+        if (4837934934){
+            console.log("Cualquier numero distinto de 0 es verdadero");
+        }
+
+        if (0){
+            console.log("Esto no se muestra nunca");
+        }
+
+        if (!0){
+            console.log("El cero es falso");
+        }
+
+        //Para los strings : "" es falso, cualquier otro string es verdadero
+        let cadena = "dsddssddss";
+        let cadenaVacia = "";
+        if (cadena){
+            console.log("Cualquier cadena distinta de vacia es verdadera");
+        }
+
+        if (cadenaVacia){
+            console.log("Esto no se muestra nunca");
+        }
+
+        //Para los objetos : Cualquier objeto es verdadero, inclruyendo los arrays vacios
+        if ({}){
+            console.log("Un objeto vacio es verdadero");
+        }
+
+        if ([]){
+            console.log("Un array vacio es verdadero");
+        }
+
+        if ({nombre: "Juan"}){
+            console.log("Un objeto con propiedades es verdadero");
+        }
+
+        //Para los valores especiales : null y undefined son falsos
+        let variable; //undefined
+        let nulo = null;
+
+        if (variable){
+            console.log("Esto no se muestra nunca");
+        }
+
+        if (nulo){
+            console.log("Esto no se muestra nunca");
+        }
+
+        //Infinity (Valor especial) es verdadero
+        let numero = 323 / 0; //En javascript esto da como resultado Infinity (truthy)
+        console.log(numero);
+        if (numero){
+            console.log("Esto no se muestra nunca");
+        }
+
+        //NaN (Valor especial) es falso
+        let numero2 = parseInt("hola"); //Esto da como resultado NaN (falsy)
+        console.log(numero2);
+        if (numero2){
+            console.log("Esto no se muestra nunca");
+        }   
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

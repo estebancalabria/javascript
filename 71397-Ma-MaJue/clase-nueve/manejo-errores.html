@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function tuSam(){
+            //Un random que a veces falle la mitad de las veces
+            if(Math.random() > 0.5){
+                //Lanzamos un error o excepcion
+                //Cuando se lanza una excepcion el flujo de ejecucion se detiene
+                throw new Error('Puede fallar....');
+            }
+
+            return "Todo un exito";
+        }
+
+        try{
+            console.log("%cTusam va a hacer su magia", "color: blue; font-size: 20px");
+            //Intentamos ejecutar el codigo
+            const magia = tuSam();
+            console.log(magia);
+            console.log("%cEl publico aplaude en extasis de emocion", "color: green; font-size: 20px");
+        }catch(error){
+            //Si hay un error lo capturamos
+            console.log(error);
+        } finally{ //Opcional y este bloque se ejecuta siempre
+            //Este bloque se ejecuta siempre
+            console.log("El show debe continuar");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
