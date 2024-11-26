@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function Persona(nombre, apellido){
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.id = ++Persona.ULTIMO_ID;
+            Persona.personas.push(this);
+        }
+        //Las funciones constructoras tambien tienen propiedades
+        //son los staticos en las clases de ES6
+        Persona.ULTIMO_ID = 0;
+        Persona.personas = [];
+
+
+        //Ejemplo de uso
+        /*let p1 = new Persona("a","b")
+        let p2 = new Persona("a2","b2")
+        let p3 = new Persona("a3","b3")
+        
+        
+        p1 >> Persona {nombre: 'a', apellido: 'b', id: 1}
+        p2 >> Persona {nombre: 'a2', apellido: 'b2', id: 2}
+        p3 >> Persona {nombre: 'a3', apellido: 'b3', id: 3}*/
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

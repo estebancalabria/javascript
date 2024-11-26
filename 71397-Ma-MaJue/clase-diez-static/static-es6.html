@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        "use strict";
+        
+        class Persona{
+
+            //Una propiedad estatica es una propiedad que pertenece a la clase 
+            //y no a la instancia, es decir, es compartida por todas las instancias
+            static ULTIMO_ID = 0;
+            static personas = [];
+            //# para atibutos privados es algo de la version ES10 del navegador
+            #id; //con # se hace privado, no funciona en todos los navegadores
+
+            constructor(nombre, apellido){
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.#id = ++Persona.ULTIMO_ID;
+                //Para tener un registro de todas las personas que se crean
+                Persona.personas.push(this);
+            }
+
+            saludar(){
+                console.log(`Hola, soy ${this.nombre} ${this.apellido}`);
+            }
+        }
+
+        //CAda vez que hago un new cada persona va a tener una copia del id, nombre, appelido
+        //Pero todas van a compartir la variable ULTIMO_ID que es estatica
+
+        //Probar el la consola crear objetos persona y ver lo del id incrementan
+
+        //Ejemplo de uso
+        /*let p1 = new Persona("a","b")
+        let p2 = new Persona("a2","b2")
+        let p3 = new Persona("a3","b3")
+        
+        
+        p1 >> Persona {nombre: 'a', apellido: 'b', id: 1}
+        p2 >> Persona {nombre: 'a2', apellido: 'b2', id: 2}
+        p3 >> Persona {nombre: 'a3', apellido: 'b3', id: 3}*/
+
+        //Encapsulamiento en JS
+        //Que pasas si hago lo siguiente
+        /*try{
+            let p = new Persona("a","b");
+            //Property '#id' is not accessible outside class 'Persona' because it has a private identifier
+            p.#id = 10; //Esto no deberia ser posible
+        }catch(e){
+            console.log("ERROR " + e); 
+        }*/
+        //El id deberia ser readonly
+        //Para evitar esto se puede hacer lo siguiente
+
+
+    </script> 
+</head>
+<body>
+    
+</body>
+</html>

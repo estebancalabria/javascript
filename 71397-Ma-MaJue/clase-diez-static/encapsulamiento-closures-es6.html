@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //IIFE : Inmediatly Invoked Function Expression
+        //Son funciones que se ejecutan inmediatamente despues de ser definidas
+        (function(){
+            //Esta funcion me da un SCOPE local (alcance)
+            //Las variables que declaro aca no van a ser accesibles desde afuera
+            let variableLocal = "Hola mundo";
+            console.log("Dentro del scope " + variableLocal);
+
+            //Ahora lo declaro aqui como una variable comun dentro de la funcion
+            let personas  = []; //Se puede ver desde afuera?
+
+            class Persona{
+                constructor (nombre, apellido){
+                    this.nombre = nombre;
+                    this.apellido = apellido;
+                    personas.push(this);
+                }
+
+                get id(){
+                    return personas.indexOf(this) + 1;
+                }
+
+                set id(value){
+                    throw new Error("No se puede modificar el id");
+                }
+            }
+
+            //Antes era asi:
+            /*function Persona(nombre, apellido){
+                this.nombre = nombre;
+                this.apellido = apellido;
+                personas.push(this); //No va el this adelante porque es una variale de la IIFE
+
+                //Propiedad ID como propiedad de solo lectura
+                Object.defineProperty(this, "id", {
+                    get: function(){
+                        return personas.indexOf(this) + 1;
+                    },
+                    set : function(){
+                        throw new Error("No se puede modificar el id");
+                    }
+                });
+
+                //defineProperty es un metodo asociado a la funcion constructora Object
+            }*/
+
+            //Para que se pueda acceder a la funcion Persona desde afuera
+            //la tengo que asignar a una variable global en el objeto window
+            window.Persona = Persona; //El objeto window para todo
+
+        })();
+
+        //console.log(variableLocal); //variableLocal is not defined
+
+        //Puedo crear una persona gracias a que exporte la funcion Persona con el objeto window
+        //Si no hacia eso no podia acceder a la funcion Persona fuera del IIFE
+        let p = new Persona("a","b");
+
+        //Esto no lo puedo hacer
+        //ULTIMO_ID = 23; //No puedo modificar la variable ULTIMO_ID desde fuera de IIFE
+        let p2 = new Persona("a","b");
+        let p3 = new Persona("a","b");
+        console.log(p.id);  //1
+        console.log(p2.id); //2
+        console.log(p3.id); //3
+
+        //Ahora esto se ignora
+        p.id = 334; //Esto ahora se ignora
+        console.log(p.id); //1
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
