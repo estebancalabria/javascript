@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script>
+        let persona = {
+            nombre: '',
+            apellido: '',
+            edad: 0,
+            direccion: '',
+            email: '',
+            telefono: '',                        
+        }
+
+        //Si una funcion utiliza un objeto global, no es una funcion pura
+        //Si solo utiliza lo que recibe como parametro, es una funcion pura
+        //Es mas recomendable hacer funciones puras porque son mas faciles de testear
+
+        //Esta es NO ES una funcion pura porque usa un objeto global (sessionStorage)
+        function onInputChange(event){
+            let input = event.target;
+            let valor = input.value;
+            let id = input.id;
+            //El session storage no lo recibo como parametro entonces esta no es una funcion pura
+            sessionStorage.setItem(id, valor);
+        }
+
+        //Esta es NO ES una funcion pura porque usa un objeto global (sessionStorage)
+        function impura_completarFormularioDesdeSessionStorage(formulario){
+            for (let i = 0; i < formulario.elements.length; i++){
+                let elemento = formulario.elements[i];
+                let id = elemento.id;
+                //El session storage no lo recibo como parametro entonces esta no es una funcion pura
+                let valor = sessionStorage.getItem(id); 
+                if (valor){
+                    elemento.value = valor;
+                }
+            }
+        }
+
+        //Vamos a hacer la version PURA de la version anterior
+        function pura_completarFormularioDesdeStorage(formulario, storage){
+            for (let i = 0; i < formulario.elements.length; i++){
+                let elemento = formulario.elements[i];
+                let id = elemento.id;
+                let valor = storage.getItem(id);
+                if (valor){
+                    elemento.value = valor;
+                }
+            }
+        }
+
+        //Esta es una FUNCION PURA sobre la cual se pueden hacer pruebas unitarias
+        //No usa objetos globales
+        function completarJsonDesdeFormulario(objeto, formulario){
+            for (let i = 0; i < formulario.elements.length; i++){
+                let elemento = formulario.elements[i];
+                let id = elemento.id;
+                let valor = elemento.value;
+                objeto && objeto[id] && (objeto[id] = valor);
+            } 
+            
+        }
+
+        //Esta es una FUNCION PURA porque todo lo que usa lo recibe como parametro
+        function crearFormularioDinamicamente(prototipo, formulario){
+            for (let propiedad in prototipo){
+                let div = document.createElement('div');
+                div.classList.add('form-group');
+                let label = document.createElement('label');
+                label.innerHTML = propiedad;
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('form-control');
+                input.id = propiedad;
+                input.placeholder = 'Ingrese ' + propiedad;
+                input.addEventListener('change', onInputChange);
+                div.appendChild(label);
+                div.appendChild(input);
+                formulario.appendChild(div);
+            }
+        }
+
+        //La funcion que que recibe el load no es pura porque document es un objeto global
+        window.addEventListener('load', function(){
+            let formulario = document.querySelector('form');
+            crearFormularioDinamicamente(persona, formulario);
+            
+            //inpurar_completarFormularioDesdeSessionStorage(formulario);
+            pura_completarFormularioDesdeStorage(formulario, sessionStorage);
+
+            let btnRefrescarPagina = document.querySelector('#btnRefrescarPagina');
+            btnRefrescarPagina.addEventListener('click', function(){
+                location.reload();
+            });
+
+            let btnGuardarEnLocalStorage = document.querySelector('#btnGuardarEnLocalStorage');
+            btnGuardarEnLocalStorage.addEventListener('click', function(){
+                completarJsonDesdeFormulario(persona, formulario);
+                localStorage.setItem('persona', JSON.stringify(persona));
+            });
+
+            
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="alert alert-info text-center">Formulario de Persona creado dinamicamente</h1>
+    </header>
+    <main class="container">  
+        <form>
+
+        </form>
+        <button id="btnRefrescarPagina" class="btn btn-primary w-100">
+            Refrescar Pagina (Upsss...)
+        </button>
+
+        <button id="btnGuardarEnLocalStorage" class="btn btn-primary w-100">
+            Guardar Objeto en Local Storage
+        </button>
+
+    </main>
+</body>
+</html>

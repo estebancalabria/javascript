@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load', function(){
+            let valor = localStorage.getItem('valor');
+            if (valor){
+                document.querySelector('#mensaje').innerHTML = 'Valor guardado en Local Storage: ' + valor;
+                document.querySelector('#txtValor').value = valor;
+            } else {
+                document.querySelector('#mensaje').innerHTML = 'No hay valor guardado en Local Storage';
+            }
+        });
+    </script>
+</head>
+<body>
+    <label>Guardar en Local Storage</label>
+    <input type="text" id="txtValor" placeholder="Ingrese texto para guardar en el Local Storage">
+    <button id="btnGuardar">Guardar en Local Storage</button>
+    <button id="btnBorrar">Borrar Local Storage</button>
+    
+    <div id="mensaje">
+
+    </div>
+
+    <script>
+        document.querySelector('#btnGuardar').addEventListener('click', function(){
+            //alert("Aca se guarda en el local Storage")
+            
+            let valor = document.querySelector('#txtValor').value;
+            localStorage.setItem('valor', valor);  //Guardamos string en el local storage
+            document.querySelector('#mensaje').innerHTML = 'Valor guardado en Local Storage (ver el F12 dev toools)';
+
+            //El valor guardado en el Local Storage se puede ver en el F12 dev tools en la pestaña Application -> Local Storage
+            //Va a seguir guardadoo aunque se cierre el navegador
+        });
+
+        document.querySelector('#btnBorrar').addEventListener('click', function(){
+            //alert("Aca se borra el local Storage")
+            localStorage.removeItem('valor');
+            document.querySelector('#mensaje').innerHTML = 'Valor borrado del Local Storage (ver el F12 dev toools)';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load', function(){
+            let valor = sessionStorage.getItem('valor');
+            if (valor){
+                document.querySelector('#mensaje').innerHTML = 'Valor guardado en Session Storage: ' + valor;
+                document.querySelector('#txtValor').value = valor;
+            } else {
+                document.querySelector('#mensaje').innerHTML = 'No hay valor guardado en Session Storage';
+            }
+        });
+    </script>
+</head>
+<body>
+    <label>Guardar en Session Storage</label>
+    <input type="text" id="txtValor" placeholder="Ingrese texto para guardar en el Session Storage">
+    <button id="btnGuardar">Guardar en Session Storage</button>
+    <button id="btnBorrar">Borrar Session Storage</button>
+    
+    <div id="mensaje">
+
+    </div>
+
+    <script>
+        document.querySelector('#btnGuardar').addEventListener('click', function(){
+            //alert("Aca se guarda en el local Storage")
+            
+            let valor = document.querySelector('#txtValor').value;
+            sessionStorage.setItem('valor', valor);  //Guardamos string en el local storage
+            document.querySelector('#mensaje').innerHTML = 'Valor guardado en Session Storage (ver el F12 dev toools)';
+
+            //El session Storage se borra cuando se cierra el navegador
+            //esta aislado por solapa
+            //Si cierro el navegador y vuelvo a abrir, el valor no va a estar guardado
+        });
+
+        document.querySelector('#btnBorrar').addEventListener('click', function(){
+            //alert("Aca se borra el local Storage")
+            sessionStorage.removeItem('valor');
+            document.querySelector('#mensaje').innerHTML = 'Valor borrado del Session Storage (ver el F12 dev toools)';
+        });
+    </script>
+</body>
+</html>
