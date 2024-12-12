@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Producto</title>
+    <link rel="stylesheet" href="form-producto.css">
+</head>
+<body>
+    <header>
+        <h1>Añadir Producto</h1>
+    </header>
+    <main>
+        <section id="form-section">
+            <h2>Formulario de Producto</h2>
+            <form id="product-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" id="descripcion" name="descripcion" required>
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" id="precio" name="precio" step="0.01" required>
+                </div>
+                <button type="submit">Añadir Producto</button>
+                <button id="volver" type="button">Volver</a>
+            </form>
+        </section>
+    </main>
+    <script src="form-producto.js"></script>
+</body>
+</html>
