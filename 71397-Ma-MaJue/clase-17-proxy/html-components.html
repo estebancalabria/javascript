@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Components</title>
+    <script>
+
+        class Titulo extends HTMLElement {
+            constructor(){
+                super();
+                this._valor = "Titulo por Defecto";
+            }
+
+            get valor(){
+                return this.getAttribute('valor');
+                //return this._valor;
+            }
+
+            set valor(value){
+                this.setAttribute('valor', value);
+                //this._valor = value;
+            }
+
+            render(){
+                this.innerHTML = `<h1>-- ${this.valor} --</h1>`;
+            }   
+
+            //Este metodo se ejecuta cuando el componente se agrega al DOM
+            connectedCallback(){
+                this.render();
+            }
+        }
+
+        customElements.define('mi-titulo', Titulo);
+    </script>
+</head>
+<body>
+    <mi-titulo valor="Hola"></mi-titulo>
+</body>
+</html>

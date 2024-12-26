@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        //Voy a usar este objeto persona
+        let persona = {
+            nombre : 'Juan',
+            apellido : 'Perez',
+            edad : 32
+        }
+
+        //Pero no lo voy a usar directaente, lo voy a usar opr medio de un proxy
+        let handler = {
+            get(obj, prop){
+                console.log(`[Proxy]Leyendo a la propiedad ${prop} del objeto ${obj.constructor.name}` );
+
+                if(prop in obj){
+                    return obj[prop];
+                }
+                return 'Propiedad no encontrada';
+            },
+
+            set(obj, prop, value){
+                console.log(`[Proxy]Escribiendo a la propiedad ${prop} del objeto ${obj.constructor.name}`);
+
+                if (prop === 'edad') {
+                    if(!Number.isInteger(value)){
+                        throw new TypeError('La edad no es un numero entero');
+                    }
+
+                    if(value < 0){
+                        throw new TypeError('La edad no puede ser negativa');
+                    }
+
+                    if(value > 110){
+                        throw new TypeError('La edad no puede ser mayor a 110 años');
+                    }
+                }
+
+        
+
+                if(prop in obj){
+                    obj[prop] = value;
+                }
+            }
+        }
+
+        let personaConProxy = new Proxy(persona, handler);
+
+        console.log(personaConProxy.nombre);
+        console.log(personaConProxy.apellido);
+        console.log(personaConProxy.edad);
+
+        //Los proxy me sirven para hacer validaciones!!!
+        personaConProxy.edad = 33; //ok
+        personaConProxy.edad = "33" //error (verl en la consola)
+        
+    </script>
+</head>
+<body>
+    <h1>Ejemplo Proxy</h1>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        main{
+            margin-left: 3em;
+            margin-right: 3em;
+        }
+
+        input{
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <form>
+            <h3>Formulario Persona Proxy Reactivo</h3>
+
+        </form>
+    </main>
+
+    <script>
+        let persona = {
+            nombre : 'Juan',
+            apellido : 'Perez',
+            edad : 32
+        }
+
+        let handler = {
+            get(obj, prop){
+                console.log(`[Proxy]Leyendo a la propiedad ${prop} del objeto ${obj.constructor.name}` );
+
+                if(prop in obj){
+                    return obj[prop];
+                }
+                throw new ReferenceError(`La propiedad ${prop} no existe en el objeto ${obj.constructor.name}`);
+            },
+
+            set(obj, prop, value){
+                console.log(`[Proxy]Escribiendo a la propiedad ${prop} del objeto ${obj.constructor.name}`);
+
+                if(prop in obj){
+                    obj[prop] = value;
+                }
+
+                //Busco el imput con ese nombre y le pongo tambien el value
+                let input = document.querySelector(`input[name=${prop}]`);
+                if(input){
+                    input.value = value;
+                }
+            }
+        }
+
+        let personaConProxy = new Proxy(persona, handler);
+
+        let form = document.querySelector('form');
+        form.addEventListener('input', e => {
+            personaConProxy[e.target.name] = e.target.value;
+        });
+
+        //Creo los campos dinamicamente
+        for (const key in personaConProxy) {
+            let input = document.createElement('input');
+            input.type = typeof personaConProxy[key] === 'number' ? 'number' : 'text';
+            input.name = key;
+            input.value = personaConProxy[key];
+            form.appendChild(input);
+        }
+
+    </script>
+</body>
+</html>

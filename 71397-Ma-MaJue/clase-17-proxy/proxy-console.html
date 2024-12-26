@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let originalLog = console.log;
+
+        //No es necesrio usar un proxy pero quiero mostrr el apply
+        console.log = new Proxy(originalLog, {
+
+            //En el proxy el apply se ejecuta cuando se llama a la funcion
+            apply(target, thisArg, argumentsList){
+                //target es el console.log original
+                //thisArg es el objeto que invoca a console.log
+                //argumentsList es la lista de argumentos que se le pasan a console.log
+
+                //Agrego un mensaje a cada console.log
+                argumentsList[0] = `[Proxy] ${argumentsList[0]}`;
+
+                //Muestro el parametro en el div
+                let div = document.querySelector('#console');
+                div.innerHTML += `<p>${argumentsList[0]}</p>`;
+
+                //Llamo al console.log original
+                return Reflect.apply(target, thisArg, argumentsList);
+            }
+        })
+
+    </script>
+</head>
+<body>
+    <h1>
+        Vamos a hacer un proxy al console.log.
+        Escriba varios console.log en la consola
+    </h1>
+    <main>
+        <div id="console">
+            
+        </div>
+
+    </main>
+</body>
+</html>

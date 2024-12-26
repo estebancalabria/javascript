@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //Este objeto es un "componente" porque tiene una representacion visual
+        class Titulo{
+            constructor(titulo){
+                this.valor = titulo;
+            }
+
+            //Un getter y setter similar a los definiamos dinamicamente con un defineProperty
+            get titulo(){
+                return this.valor;
+            }
+
+            set titulo(value){
+                this.valor = value;
+            }
+
+            toString(){
+                return `<h1>-- ${this.titulo} --</h1>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <main></main>
+
+    <script>
+        let titulo = new Titulo();
+        titulo.titulo = 'Componente Titulo';
+        let main = document.querySelector('main');
+        main.innerHTML = titulo;
+    </script>
+</body>
+</html>

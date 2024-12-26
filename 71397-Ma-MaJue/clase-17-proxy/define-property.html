@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        main{
+            margin-left: 3em;
+            margin-right: 3em;
+        }
+
+        input{
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <form>
+            <h3>Formulario Persona</h3>
+
+            <input type="text" name="nombre" placeholder="Nombre">
+            <input type="text" name="apellido" placeholder="Apellido">
+            <input type="number" name="edad" placeholder="Edad">
+        </form>
+    </main>
+
+    <script>
+        let persona = {}
+        const form = document.querySelector('form');
+
+        Array.from(form.elements).forEach(input => {
+
+            //El defineProperties me permite definir propiedades de un objeto
+            //con un get y un set
+            Object.defineProperty(persona, input.name, {
+                    get(){
+                        return input.value;
+                    },
+                    set(value){
+                        input.value = value;
+                    }
+                })
+        });
+
+    </script>
+</body>
+</html>
