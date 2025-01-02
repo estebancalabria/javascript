@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        let persona = {
+            nombre: "Anakin",
+            edad: 18,
+        }
+
+        //--------------------------------------------------------------------  
+        //Ejemplo 1 : Desestructurando un objeto
+        //--------------------------------------------------------------------
+
+        //Padawan
+        //let nombre = persona.nombre;
+        //let edad = persona.edad;
+
+        //Jedi
+        let {nombre, edad} = persona;
+
+        console.log("nombre: ", nombre);
+        console.log("edad: ", edad);
+
+        //--------------------------------------------------------------------
+        // Ejemplo 2 : Desestructurando un objeto anidado  (Bonus Track)
+        //--------------------------------------------------------------------
+        let personaAnidada = {
+            nombre: "Anakin",
+            edad: 18,
+            direccion : {
+                calle: "Siempreviva",
+                numero: 1,
+                detalle : {
+                    esCasa: true
+                }
+            }
+        }
+
+        //Padawan
+        //let calle = personaAnidada.direccion.calle;
+
+        //Jedi
+        let {direccion: {calle}} = personaAnidada;
+
+        console.log("calle: ", calle);  
+
+        //--------------------------------------------------------------------
+        //Ejemplo 3 : Desestrucando paramtros de una función
+        //--------------------------------------------------------------------
+
+        //Padawan
+        function mostrarPersonaPadawan(persona){
+            console.log("nombre: ", persona.nombre);
+            console.log("edad: ", persona.edad);
+        }   
+
+        //Jedi
+        function mostrarPersonaJedi({nombre, edad}){
+            console.log("nombre: ", nombre);
+            console.log("edad: ", edad);
+        }
+
+        //En cualquiera de los dos casos se llama igual
+        mostrarPersonaPadawan(persona);
+        mostrarPersonaJedi(persona);
+
+        //--------------------------------------------------------------------
+        //Ejemplo 4 : Desestrucando un array
+        //--------------------------------------------------------------------
+
+        let arr = [1, 2, 3, 4, 5];
+        
+        //Padawan
+        //let primerElemento = arr[0];
+        //let segundoElemento = arr[1];
+
+        //Jedi
+        let [primerElemento, segundoElemento] = arr;
+
+        //--------------------------------------------------------------------
+        //Ejemplo 5 : Manejo de errores con desestructuracion
+        //--------------------------------------------------------------------
+
+        function dividir_con_trow(a, b){
+            if (b === 0){
+                throw new Error("No se puede dividir por cero");
+            }
+            return a / b;
+        }
+
+        //Para usar esa funcion y capturar el error uso un try catch
+        try {
+            let resultado = dividir_con_trow(10, 0);
+            console.log("resultado: ", resultado);
+        } catch (error) {
+            console.log("Error: ", error);
+        }
+
+        //Si quiero desestructurar el resultado, puedo hacerlo en el try
+        function dividir_desestructurando(a, b){
+            try{
+                return {success : true, resultado: a / b};
+            }
+            catch (error){
+                return {success : false, error: error,  resultado: undefined};
+            }
+            
+        }
+
+        let {success, resultado} = dividir_desestructurando(10, 0);
+        success ? console.log("resultado: ", resultado) : console.log("Error: ", resultado.error);
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

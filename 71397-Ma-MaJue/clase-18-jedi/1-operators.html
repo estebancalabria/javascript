@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //---------------------------------------------------------------
+        //Ejemplo 1 : uso el operador ternario para simplificar el código
+        //---------------------------------------------------------------
+        let edad = 18;
+        let mayor;
+
+        //padawan
+        if (edad >= 18) {
+            mayor = true;
+        } else {
+            mayor = false;
+        }
+
+        //jedi
+        mayor = (edad >= 18) ? true : false; //uso el operador ternario para simplificar el código
+
+        //------------------------------------------------------------------------
+        //Ejemplo 2 : uso del operador lógico && y || para simplificar el código
+        //------------------------------------------------------------------------
+
+        let mostrarPelisMayores = () => { console.log("Mostrar pelis para mayores de 18 años") };
+        let mostrarPelisMenores = () => { console.log("Mostrar pelis para menores de 18 años") };
+
+        //padawan
+        if (edad >= 18) {
+            mostrarPelisMayoers();
+        } else {
+            mostrarPelisMenores();
+        }
+
+        //jedi
+        mayor && mostrarPelisMayores() || mostrarPelisMenores(); //uso del operador lógico && y || para simplificar el código
+
+        //o bien
+        mayor && mostrarPelisMayores();  //Se ejecuta mostrarPelisMayores() si mayor es true
+        mayor || mostrarPelisMenores();  //Se ejecuta mostrarPelisMenores() si mayor es false
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

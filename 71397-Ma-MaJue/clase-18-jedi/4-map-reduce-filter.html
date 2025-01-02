@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //Crearmos un array
+        //Padawan
+        //let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        //Jedi : usa el método from de la clase Array
+        let arr = Array.from({length: 10}, (v, i) => i + 1);
+
+        console.log("Array Creado => arr: ", arr);
+
+        //-------------------------------------------------------------------------------
+        //Ejemplo 1: Uso del método map para transformar los elementos del array
+        //-------------------------------------------------------------------------------
+        
+        console.log("Quiero convertir el array en otro donde cada elemento sea el doble del original");
+
+        //Padaawan
+        //let arrDoble = [];
+        //for (let i = 0; i < arr.length; i++){
+        //    arrDoble.push(arr[i] * 2);
+        //}
+
+        //Jedi
+        let arrDoble = arr.map((elemento) => elemento * 2);
+
+        console.log("Array Doble => arrDoble: ", arrDoble);
+        
+      
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

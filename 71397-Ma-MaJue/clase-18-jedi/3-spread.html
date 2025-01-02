@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        let arr = [];
+
+        //-------------------------------------------------------------------------------
+        //Ejemplo 1: Agregar un elemento al final del array. Uso del operador spread ...
+        //-------------------------------------------------------------------------------
+
+        //Padawan
+        arr.push(1);
+        arr.push(2);
+
+        //Jedi
+        arr = [...arr, 3, 4]; //uso del operador spread para agregar elementos al array
+
+        console.log("arr: ", arr);  //arr:  [1, 2, 3, 4]        
+
+
+        //-------------------------------------------------------------------------------
+        //Ejemplo 2: Agregar un elemento al inicio del array. 
+        //-------------------------------------------------------------------------------
+
+        //padawan
+        arr.unshift(0);
+        arr.splice(0, 0, -1);   //splice(posicion, cantidad de elementos a eliminar, elemento a agregar)
+
+        //jedi
+        arr = [0, ...arr]; //uso del operador spread para agregar elementos al array
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //--------------------------------------------------------------------
+        //Ejemplo 1 : uso de los operadores ?? y ? para simplificar el código
+        //--------------------------------------------------------------------
+        let personaUno = {
+            nombre: "Anakin",
+            edad: 18,
+            direccion : {
+                calle: "Siempreviva",
+                numero: 1,
+                detalle : {
+                    esCasa: true
+                }
+            }
+        }
+
+        personaDos = {
+            nombre: "Luke",
+            edad: 20,
+        }
+
+        //Padawan
+        
+        //Sin Chequeo
+        //let esCasaPersona1 = personaUno.direccion.detalle.esCasa;
+        //Uncaught TypeError: Cannot read properties of undefined (reading 'detalle')
+        //let esCasaPersona2 = personaDos.direccion.detalle.esCasa; 
+
+        //Con chequeo
+        let esCasaPersona1 = undefined;
+        if ((personaUno.direccion) && (personaUno.direccion.detalle) && (personaUno.direccion.detalle.esCasa)){
+            esCasaPersona1 = personaUno.direccion.detalle.esCasa;
+        }
+        let esCasaPersona2 = personaDos.direccion && personaDos.direccion.detalle && personaDos.direccion.detalle.esCasa;
+
+        //Estos console.log no se ejecutan sin el chequeo
+        console.log("El padawan despues de mucho esfuerzo logra llegar a este punto");
+        console.log("esCasaPersona1: ", esCasaPersona1);
+        console.log("esCasaPersona2: ", esCasaPersona2); //undefined
+
+
+        //Jedi
+        //Utiliza el operador ? (opcional chaining) para simplificar el código
+        esCasaPersona1 = personaUno?.direccion?.detalle?.esCasa;
+        esCasaPersona2 = personaDos?.direccion?.detalle?.esCasa;
+        console.log("El jedi llega a este punto sin problemas");
+        console.log("esCasaPersona1: ", esCasaPersona1);
+        //console.log("esCasaPersona2: ", esCasaPersona2 || "No esta definido"); //El operador || habilita el segundo termino si el primero es falsie
+        //Todavia mejor
+        console.log("esCasaPersona2: ", esCasaPersona2 ?? "No esta definido"); //El operador ?? habilita el segundo termino si el primero es null o undefined
+        //El operador ?? se llama nullish coalescing operator
+
+        //--------------------------------------------------------------------
+        // Ejemplo 2 : uso del operadores ?? para asignar valores por defecto
+        //--------------------------------------------------------------------
+        function saludar(nombre){
+            //El operador ?? se utiliza mucho para asignar valores por defecto
+            nombre = nombre ?? "Anónimo"; //Si nombre es null o undefined, se asigna "Anónimo"
+            console.log("Hola " + nombre);
+        }
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
