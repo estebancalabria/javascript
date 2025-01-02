@@ -1,4 +1,12 @@
-# Repo
+# Recursos Web Javascript
+
+* LeetCode para hacer ejericios Javascript
+> https://leetcode.com/
+
+* Codewars para hacer ejericios Javascript
+> https://www.codewars.com/
+
+# Repositorios Javascript
 
 * Javascript Algoritmos y Estructuras de Datos
 > https://github.com/trekhleb/javascript-algorithms
